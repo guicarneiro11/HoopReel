@@ -1,7 +1,14 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
 }
+
+val localProperties = Properties()
+localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
 android {
     namespace = "com.guicarneirodev.hoopreel.core"
@@ -12,6 +19,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField(
+            "String",
+            "YOUTUBE_API_KEY",
+            "\"${localProperties.getProperty("YOUTUBE_API_KEY")}\""
+        )
     }
 
     buildFeatures {
