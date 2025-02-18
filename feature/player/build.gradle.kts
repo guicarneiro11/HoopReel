@@ -46,9 +46,12 @@ android {
 dependencies {
     implementation(project(":core"))
 
-    // ExoPlayer
-    implementation(libs.exoplayer.core)
-    implementation(libs.exoplayer.ui)
+    // Media
+    implementation(libs.media.exoplayer)
+    implementation(libs.media.ui)
+    implementation(libs.media.session)
+    implementation(libs.media.datasource)
+    implementation(libs.youtube.player)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -58,4 +61,8 @@ dependencies {
     // ViewModel
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+
+    // DI Base
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 }

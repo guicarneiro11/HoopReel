@@ -71,7 +71,8 @@ dependencies {
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
 
-    // Koin para UI
+    // DI Base
+    implementation(libs.koin.android)
     implementation(libs.koin.compose)
 
     // Debug

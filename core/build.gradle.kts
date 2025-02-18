@@ -73,4 +73,5 @@ dependencies {
 
     // DI Base
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 }

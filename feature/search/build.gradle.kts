@@ -52,4 +52,8 @@ dependencies {
     // ViewModel
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+
+    // DI Base
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 }
