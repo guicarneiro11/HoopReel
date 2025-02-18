@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "com.guicarneirodev.hoopreel.feature.highlights"
+    namespace = "com.guicarneirodev.hoopreel.feature.search"
     compileSdk = 35
 
     defaultConfig {
@@ -15,8 +16,14 @@ android {
     }
 
     buildFeatures {
+        buildConfig = false
         compose = true
     }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.15"
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
