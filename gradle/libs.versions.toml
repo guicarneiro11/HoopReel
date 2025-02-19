@@ -19,6 +19,8 @@ media = "1.5.1"
 coroutines = "1.10.1"
 okhttp = "4.12.0"
 youtube-player = "11.1.0"
+coil = "2.7.0"
+material-icons = "1.7.8"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,10 +66,13 @@ media-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "media
 media-session = { group = "androidx.media3", name = "media3-session", version.ref = "media" }
 media-datasource = { group = "androidx.media3", name = "media3-datasource", version.ref = "media" }
 youtube-player = { group = "com.pierfrancescosoffritti.androidyoutubeplayer", name = "core", version.ref = "youtube-player" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 # Coroutines
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material-icons" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

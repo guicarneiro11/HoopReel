@@ -48,6 +48,9 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.material3)
 
+    // Coil
+    implementation(libs.coil.compose)
+
     // ViewModel
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
@@ -55,4 +58,7 @@ dependencies {
     // DI Base
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    // Icons
+    implementation(libs.material.icons.extended)
 }
