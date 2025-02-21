@@ -18,8 +18,10 @@ interface YouTubeApiService {
         @Query("part") part: String = "snippet",
         @Query("type") type: String = "video",
         @Query("videoDuration") videoDuration: String = "medium",
+        @Query("relevanceLanguage") relevanceLanguage: String = "en",
+        @Query("safeSearch") safeSearch: String = "moderate",
         @Query("q") query: String,
-        @Query("maxResults") maxResults: Int = 10,
+        @Query("maxResults") maxResults: Int = 20,
         @Query("order") order: String = "viewCount",
         @Query("key") apiKey: String = BuildConfig.YOUTUBE_API_KEY
     ): VideoResponse

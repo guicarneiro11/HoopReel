@@ -46,6 +46,7 @@ dependencies {
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
+    implementation(libs.material.compose)
     implementation(libs.androidx.material3)
 
     // Coil

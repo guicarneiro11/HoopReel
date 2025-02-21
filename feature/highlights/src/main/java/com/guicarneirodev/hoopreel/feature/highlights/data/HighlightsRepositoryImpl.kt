@@ -26,157 +26,157 @@ class HighlightsRepositoryImpl(
         Player(
             id = "lebron-james",
             name = "LeBron James",
-            searchTerms = "Lebron James mix",
+            searchTerms = "\"Lebron James\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "kevin-durant",
             name = "Kevin Durant",
-            searchTerms = "Kevin Durant mix",
+            searchTerms = "\"Kevin Durant\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "steph-curry",
             name = "Stephen Curry",
-            searchTerms = "Stephen Curry mix",
+            searchTerms = "\"Stephen Curry\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "luka-doncic",
             name = "Luka Dončić",
-            searchTerms = "Luka Doncic mix",
+            searchTerms = "\"Luka Doncic\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "shai-gilgeous-alexander",
             name = "Shai Gilgeous-Alexander",
-            searchTerms = "Shai Gilgeous-Alexander mix",
+            searchTerms = "\"Shai Gilgeous-Alexander\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "jokic",
             name = "Nikola Jokić",
-            searchTerms = "Nikola Jokic mix",
+            searchTerms = "\"Nikola Jokic\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "giannis",
             name = "Giannis Antetokounmpo",
-            searchTerms = "Giannis Antetokounmpo mix",
+            searchTerms = "\"Giannis Antetokounmpo\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "tatum",
             name = "Jayson Tatum",
-            searchTerms = "Jayson Tatum mix",
+            searchTerms = "\"Jayson Tatum\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "anthony-davis",
             name = "Anthony Davis",
-            searchTerms = "Anthony Davis mix",
+            searchTerms = "\"Anthony Davis\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "trae-young",
             name = "Trae Young",
-            searchTerms = "Trae Young mix",
+            searchTerms = "\"Trae Young\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "victor-wembanyama",
             name = "Victor Wembanyama",
-            searchTerms = "Victor Wembanyama mix",
+            searchTerms = "\"Victor Wembanyama\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "james-harden",
             name = "James Harden",
-            searchTerms = "James Harden mix",
+            searchTerms = "\"James Harden\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "anthony-edwards",
             name = "Anthony Edwards",
-            searchTerms = "Anthony Edwards mix",
+            searchTerms = "\"Anthony Edwards\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "russel-westbrook",
             name = "Russel Westbrook",
-            searchTerms = "Russel Westbrook mix",
+            searchTerms = "\"Russel Westbrook\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "kyrie-irving",
             name = "Kyrie Irving",
-            searchTerms = "Kyrie Irving mix",
+            searchTerms = "\"Kyrie Irving\" mix",
             imageUrl = "..."
         ),
         Player(
             id = "ja-morant",
             name = "Ja Morant",
-            searchTerms = "Ja Morant mix",
+            searchTerms = "\"Ja Morant\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "donovan-mitchell",
             name = "Donovan Mitchell",
-            searchTerms = "Donovan Mitchell mix",
+            searchTerms = "\"Donovan Mitchell\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "cade-cunningham",
             name = "Cade Cunningham",
-            searchTerms = "Cade Cunningham mix",
+            searchTerms = "\"Cade Cunningham\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "joel-embiid",
             name = "Joel Embiid",
-            searchTerms = "Joel Embiid mix",
+            searchTerms = "\"Joel Embiid\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "damian-lillard",
             name = "Damian Lillard",
-            searchTerms = "Damian Lillard mix",
+            searchTerms = "\"Damian Lillard\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "devin-booker",
             name = "Devin Booker",
-            searchTerms = "Devin Booker mix",
+            searchTerms = "\"Devin Booker\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "zion-williamson",
             name = "Zion Williamson",
-            searchTerms = "Zion Williamson mix",
+            searchTerms = "\"Zion Williamson\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "lamelo-ball",
             name = "LaMelo Ball",
-            searchTerms = "LaMelo Ball mix",
+            searchTerms = "\"LaMelo Ball\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "kawhi-leonard",
             name = "Kawhi Leonard",
-            searchTerms = "Kawhi Leonard mix",
+            searchTerms = "\"Kawhi Leonard\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "paolo-banchero",
             name = "Paolo Banchero",
-            searchTerms = "Paolo Banchero mix",
+            searchTerms = "\"Paolo Banchero\" highlights mix",
             imageUrl = "..."
         ),
         Player(
             id = "allen-iverson",
             name = "Allen Iverson",
-            searchTerms = "allen-iverson mix",
+            searchTerms = "\"Allen Iverson\" mix",
             imageUrl = "..."
         ),
     )
@@ -269,40 +269,50 @@ class HighlightsRepositoryImpl(
         searchTerms: String
     ): List<VideoHighlight> {
         return try {
-            Log.d("HighlightsRepo", "Fetching highlights for player: $playerId")
-
             val response = youTubeApiService.searchVideos(
                 query = searchTerms,
-                maxResults = 10
+                maxResults = 20 // Aumentar para ter mais opções para filtrar
             )
 
-            response.items.mapNotNull { videoItem ->
-                val videoId = videoItem.id?.let { id ->
-                    when (id) {
-                        is Map<*, *> -> id["videoId"] as? String
-                        is String -> id
-                        else -> {
-                            Log.e("HighlightsRepo", "Unknown id type: ${id::class.java}")
-                            null
+            response.items
+                .mapNotNull { videoItem ->
+                    val title = videoItem.snippet.title.lowercase()
+                    val playerName = players.find { it.id == playerId }?.name?.lowercase()
+                        ?: return@mapNotNull null
+
+                    // Verificar se o título contém o nome do jogador e não contém outros nomes
+                    val isRelevant = title.contains(playerName) &&
+                            !players.any { otherPlayer ->
+                                otherPlayer.id != playerId &&
+                                        title.contains(otherPlayer.name.lowercase())
+                            }
+
+                    // Extrair videoId usando when
+                    val videoId = videoItem.id?.let { id ->
+                        when (id) {
+                            is Map<*, *> -> id["videoId"] as? String
+                            is String -> id
+                            else -> {
+                                Log.e("HighlightsRepo", "Unknown id type: ${id::class.java}")
+                                null
+                            }
                         }
                     }
-                }
 
-                videoId?.let { id ->
-                    VideoHighlight(
-                        id = id,
-                        title = videoItem.snippet.title,
-                        thumbnailUrl = videoItem.snippet.thumbnails.high.url,
-                        views = "N/A",
-                        publishedAt = videoItem.snippet.publishedAt
-                    )
+                    if (isRelevant && videoId != null) {
+                        VideoHighlight(
+                            id = videoId,
+                            title = videoItem.snippet.title,
+                            thumbnailUrl = videoItem.snippet.thumbnails.high.url,
+                            views = "N/A",
+                            publishedAt = videoItem.snippet.publishedAt
+                        )
+                    } else null
                 }
-            }.also { highlights ->
-                Log.d("HighlightsRepo", "Found ${highlights.size} highlights for $playerId")
-            }
+                .take(10) // Limitar aos 10 mais relevantes
         } catch (e: Exception) {
             Log.e("HighlightsRepo", "Error fetching highlights for $playerId", e)
-            throw e // Propagar erro para usar cache
+            emptyList()
         }
     }
 }
