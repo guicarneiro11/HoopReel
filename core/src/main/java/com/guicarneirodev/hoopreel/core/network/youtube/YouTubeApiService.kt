@@ -17,8 +17,10 @@ interface YouTubeApiService {
     suspend fun searchVideos(
         @Query("part") part: String = "snippet",
         @Query("type") type: String = "video",
+        @Query("videoDuration") videoDuration: String = "medium",
         @Query("q") query: String,
-        @Query("maxResults") maxResults: Int = 50,
+        @Query("maxResults") maxResults: Int = 10,
+        @Query("order") order: String = "viewCount",
         @Query("key") apiKey: String = BuildConfig.YOUTUBE_API_KEY
     ): VideoResponse
 }

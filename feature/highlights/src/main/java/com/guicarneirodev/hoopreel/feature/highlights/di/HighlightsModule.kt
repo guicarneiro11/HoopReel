@@ -7,7 +7,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val highlightsModule = module {
-    factory { HighlightsRepositoryImpl(get()) }
+    factory { HighlightsRepositoryImpl(get(),get(),get()) }
     factory<HighlightsRepository> { get<HighlightsRepositoryImpl>() }
     viewModel { HighlightsViewModel(get()) }
 }
