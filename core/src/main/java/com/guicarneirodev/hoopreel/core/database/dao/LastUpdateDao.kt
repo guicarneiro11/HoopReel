@@ -13,4 +13,7 @@ interface LastUpdateDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(lastUpdate: LastUpdateEntity)
+
+    @Query("DELETE FROM last_update")
+    suspend fun clearLastUpdate()
 }

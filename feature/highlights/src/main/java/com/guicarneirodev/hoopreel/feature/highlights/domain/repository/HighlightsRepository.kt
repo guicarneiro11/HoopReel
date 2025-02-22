@@ -6,4 +6,5 @@ import com.guicarneirodev.hoopreel.feature.highlights.domain.model.VideoHighligh
 interface HighlightsRepository {
     suspend fun getPlayerHighlights(playerId: String): List<VideoHighlight>
     suspend fun getPlayers(): List<Player>
+    suspend fun refreshData()
 }

@@ -15,20 +15,34 @@ class HighlightsViewModel(
     private val _uiState = MutableStateFlow<HighlightsUiState>(HighlightsUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
     init {
-        Log.d("HighlightsViewModel", "Initializing...") // Debug log
         loadPlayers()
+    }
+
+    fun refresh() {
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            try {
+                repository.refreshData()
+                loadPlayers()
+            } catch (e: Exception) {
+                _uiState.value = HighlightsUiState.Error(e.message ?: "Unknown error")
+            } finally {
+                _isRefreshing.value = false
+            }
+        }
     }
 
     private fun loadPlayers() {
         viewModelScope.launch {
+            _uiState.value = HighlightsUiState.Loading
             try {
-                Log.d("HighlightsViewModel", "Loading players...") // Debug log
                 val players = repository.getPlayers()
-                Log.d("HighlightsViewModel", "Players loaded: ${players.size}") // Debug log
                 _uiState.value = HighlightsUiState.Success(players)
             } catch (e: Exception) {
-                Log.e("HighlightsViewModel", "Error loading players", e) // Debug log
                 _uiState.value = HighlightsUiState.Error(e.message ?: "Unknown error")
             }
         }

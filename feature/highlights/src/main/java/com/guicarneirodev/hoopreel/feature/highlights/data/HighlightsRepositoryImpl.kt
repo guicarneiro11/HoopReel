@@ -27,7 +27,7 @@ class HighlightsRepositoryImpl(
             id = "lebron-james",
             name = "LeBron James",
             searchTerms = "\"Lebron James\" mix",
-            imageUrl = "..."
+            imageUrl = "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"
         ),
         Player(
             id = "kevin-durant",
@@ -314,5 +314,10 @@ class HighlightsRepositoryImpl(
             Log.e("HighlightsRepo", "Error fetching highlights for $playerId", e)
             emptyList()
         }
+    }
+
+    override suspend fun refreshData() {
+        highlightDao.deleteAllHighlights()
+        lastUpdateDao.clearLastUpdate()
     }
 }

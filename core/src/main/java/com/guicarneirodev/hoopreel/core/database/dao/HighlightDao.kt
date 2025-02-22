@@ -16,4 +16,7 @@ interface HighlightDao {
 
     @Query("DELETE FROM highlights WHERE playerId = :playerId")
     suspend fun deleteHighlightsForPlayer(playerId: String)
+
+    @Query("DELETE FROM highlights")
+    suspend fun deleteAllHighlights()
 }
