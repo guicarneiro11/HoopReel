@@ -1,5 +1,5 @@
 # 🏀 HoopReel
-Modern NBA highlights streaming application, offering a Netflix-style experience for basketball fans with curated content from the best players.
+NBA highlights video player application, offering a Netflix-style experience for basketball fans with curated content from the best players.
 
 [![Kotlin](https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white)](https://kotlinlang.org/)
 [![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://developer.android.com/)
