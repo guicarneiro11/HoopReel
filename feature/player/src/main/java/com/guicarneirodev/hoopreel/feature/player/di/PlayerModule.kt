@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val playerModule = module {
     factory { PlayerRepositoryImpl(get()) }
     factory<PlayerRepository> { get<PlayerRepositoryImpl>() }
-    viewModel { PlayerViewModel(get()) }
+    viewModel { PlayerViewModel(get(), get()) }
 }

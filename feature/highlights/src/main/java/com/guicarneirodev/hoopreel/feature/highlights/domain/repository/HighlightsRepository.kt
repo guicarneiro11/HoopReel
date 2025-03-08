@@ -7,4 +7,5 @@ interface HighlightsRepository {
     suspend fun getPlayerHighlights(playerId: String): List<VideoHighlight>
     suspend fun getPlayers(): List<Player>
     suspend fun refreshData()
+    fun getPlayerByVideoId(videoId: String): Player?
 }

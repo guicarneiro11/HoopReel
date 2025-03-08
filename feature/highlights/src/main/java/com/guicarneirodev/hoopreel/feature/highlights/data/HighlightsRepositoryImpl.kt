@@ -27,7 +27,7 @@ class HighlightsRepositoryImpl(
             id = "lebron-james",
             name = "LeBron James",
             searchTerms = "\"Lebron James\" mix",
-            imageUrl = "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"
+            imageUrl = "..."
         ),
         Player(
             id = "kevin-durant",
@@ -288,7 +288,7 @@ class HighlightsRepositoryImpl(
                             }
 
                     // Extrair videoId usando when
-                    val videoId = videoItem.id?.let { id ->
+                    val videoId = videoItem.id.let { id ->
                         when (id) {
                             is Map<*, *> -> id["videoId"] as? String
                             is String -> id
@@ -319,5 +319,11 @@ class HighlightsRepositoryImpl(
     override suspend fun refreshData() {
         highlightDao.deleteAllHighlights()
         lastUpdateDao.clearLastUpdate()
+    }
+
+    override fun getPlayerByVideoId(videoId: String): Player? {
+        return players.find { player ->
+            player.highlights.any { highlight -> highlight.id == videoId }
+        }
     }
 }

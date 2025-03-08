@@ -2,6 +2,7 @@ package com.guicarneirodev.hoopreel.feature.player.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
 import com.guicarneirodev.hoopreel.feature.player.domain.model.Video
 import com.guicarneirodev.hoopreel.feature.player.domain.repository.PlayerRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,7 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class PlayerViewModel(
-    private val repository: PlayerRepository
+    private val repository: PlayerRepository,
+    private val highlightsRepository: HighlightsRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<PlayerUiState>(PlayerUiState.Initial)
     val uiState = _uiState.asStateFlow()
@@ -24,6 +26,11 @@ class PlayerViewModel(
                 _uiState.value = PlayerUiState.Error(e.message ?: "Unknown error")
             }
         }
+    }
+
+    fun getPlayerName(videoId: String): String {
+        // Find player by video ID
+        return highlightsRepository.getPlayerByVideoId(videoId)?.name ?: ""
     }
 }
 

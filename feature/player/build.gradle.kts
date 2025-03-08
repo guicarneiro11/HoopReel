@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature:highlights"))
 
     // Media
     implementation(libs.media.exoplayer)
@@ -61,6 +62,7 @@ dependencies {
     // ViewModel
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.material.icons.extended)
 
     // DI Base
     implementation(libs.koin.android)
