@@ -2,17 +2,33 @@ package com.guicarneirodev.hoopreel.feature.player.ui
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import android.view.ViewGroup
-import androidx.annotation.OptIn
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Forward10
+import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.Pause
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Replay10
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,24 +36,27 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.media3.common.MediaItem
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import com.guicarneirodev.hoopreel.feature.player.BasketballOrange
 import com.guicarneirodev.hoopreel.feature.player.presentation.PlayerUiState
 import com.guicarneirodev.hoopreel.feature.player.presentation.PlayerViewModel
-import com.guicarneirodev.hoopreel.feature.player.ui.player.CustomVideoControls
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
-@OptIn(UnstableApi::class)
 @Composable
 fun PlayerScreen(
     viewModel: PlayerViewModel = koinViewModel(),
@@ -45,21 +64,15 @@ fun PlayerScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val player = remember { ExoPlayer.Builder(context).build() }
     var showControls by remember { mutableStateOf(true) }
     var isPlaying by remember { mutableStateOf(true) }
+    var lifecycle = LocalLifecycleOwner.current.lifecycle
+    val youTubePlayer = remember { mutableStateOf<YouTubePlayer?>(null) }
 
-    // Hide controls after a delay
     LaunchedEffect(showControls) {
         if (showControls) {
             delay(3000) // Hide controls after 3 seconds of inactivity
             showControls = false
-        }
-    }
-
-    DisposableEffect(player) {
-        onDispose {
-            player.release()
         }
     }
 
@@ -86,64 +99,190 @@ fun PlayerScreen(
             is PlayerUiState.Success -> {
                 val video = state.video
 
-                // Initialize player
-                LaunchedEffect(video) {
-                    player.setMediaItem(MediaItem.fromUri(video.videoUrl))
-                    player.prepare()
-                    player.play()
-                    isPlaying = true
-                }
-
-                // YouTube player view
                 AndroidView(
                     factory = { ctx ->
-                        PlayerView(ctx).apply {
-                            this.player = player
-                            useController = false // Disable default controls
-                            setShutterBackgroundColor(Color.Black.toArgb())
-                            layoutParams = ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT
-                            )
+                        YouTubePlayerView(ctx).apply {
+                            enableAutomaticInitialization = false
+
+                            addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                                override fun onReady(youTubePlayer: YouTubePlayer) {
+                                    youTubePlayer.loadVideo(videoId, 0f)
+                                    youTubePlayer.value = youTubePlayer
+                                }
+
+                                override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+                                    isPlaying = state == PlayerConstants.PlayerState.PLAYING
+                                }
+                            })
+
+                            getPlayerUiController().apply {
+                                showFullscreenButton(false)
+                                showYouTubeButton(false)
+                                showSeekBar(false)
+                                showVideoTitle(false)
+                                showCurrentTime(false)
+                                showDuration(false)
+                            }
+
+                            addFullScreenListener { isFullScreen ->
+                                val activity = context as? Activity
+                                activity?.requestedOrientation = if (isFullScreen) {
+                                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                                } else {
+                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                }
+                            }
+
+                            (ctx as? LifecycleOwner)?.let {
+                                lifecycle = it.lifecycle
+                            }
                         }
                     },
                     modifier = Modifier.fillMaxSize()
                 )
 
                 // Custom controls overlay
-                CustomVideoControls(
-                    player = player,
-                    videoTitle = video.title,
-                    playerName = viewModel.getPlayerName(videoId),
-                    viewCount = "1.2M views", // You can fetch this from API
-                    isPlaying = isPlaying,
-                    onPlayPauseClick = {
-                        if (isPlaying) {
-                            player.pause()
-                        } else {
-                            player.play()
+                AnimatedVisibility(
+                    visible = showControls,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                Brush.verticalGradient(
+                                    colors = listOf(
+                                        Color.Black.copy(alpha = 0.7f),
+                                        Color.Transparent,
+                                        Color.Transparent,
+                                        Color.Black.copy(alpha = 0.7f)
+                                    )
+                                )
+                            )
+                    ) {
+                        // Top bar with player info
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.TopCenter)
+                                .padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Back button
+                            IconButton(
+                                onClick = { /* Handle back navigation */ }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "Back",
+                                    tint = Color.White
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.width(16.dp))
+
+                            // Video info
+                            Column {
+                                Text(
+                                    text = viewModel.getPlayerName(videoId),
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
+                                )
+
+                                Text(
+                                    text = video.title,
+                                    color = Color.White.copy(alpha = 0.8f),
+                                    fontSize = 14.sp,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
-                        isPlaying = !isPlaying
-                    },
-                    onForwardClick = {
-                        player.seekTo(player.currentPosition + 10000) // 10 seconds
-                        showControls = true
-                    },
-                    onRewindClick = {
-                        player.seekTo(player.currentPosition - 10000) // 10 seconds
-                        showControls = true
-                    },
-                    onFullscreenClick = {
-                        // Toggle fullscreen mode
-                        val activity = context as? Activity
-                        activity?.requestedOrientation = if (activity?.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
-                            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                        } else {
-                            ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+                        // Center controls
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            IconButton(onClick = {
+                                youTubePlayer.value?.seekTo((youTubePlayer.value?.currentSecond ?: 0f) - 10)
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Replay10,
+                                    contentDescription = "Rewind 10 seconds",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(36.dp)
+                                )
+                            }
+
+                            IconButton(
+                                onClick = {
+                                    youTubePlayer.value?.let { player ->
+                                        if (isPlaying) {
+                                            player.pause()
+                                        } else {
+                                            player.play()
+                                        }
+                                    }
+                                },
+                                modifier = Modifier.size(56.dp)
+                            ) {
+                                Icon(
+                                    imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+                                    contentDescription = if (isPlaying) "Pause" else "Play",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(48.dp)
+                                )
+                            }
+
+                            IconButton(onClick = {
+                                youTubePlayer.value?.seekTo((youTubePlayer.value?.currentSecond ?: 0f) + 10)
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Forward10,
+                                    contentDescription = "Forward 10 seconds",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(36.dp)
+                                )
+                            }
                         }
-                    },
-                    showControls = showControls
-                )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter)
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            val viewCount = formatViewCount(video.statistics?.viewCount)
+                            Text(
+                                text = viewCount,
+                                color = Color.White,
+                                fontSize = 14.sp
+                            )
+
+                            IconButton(onClick = {
+                                val activity = context as? Activity
+                                activity?.requestedOrientation = if (activity?.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                } else {
+                                    ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Fullscreen,
+                                    contentDescription = "Toggle fullscreen",
+                                    tint = Color.White
+                                )
+                            }
+                        }
+                    }
+                }
             }
 
             is PlayerUiState.Error -> {
@@ -156,5 +295,20 @@ fun PlayerScreen(
                 )
             }
         }
+    }
+}
+
+private fun formatViewCount(viewCount: String?): String {
+    if (viewCount == null) return "N/A views"
+
+    return try {
+        val count = viewCount.toLong()
+        when {
+            count >= 1_000_000 -> String.format("%.1fM views", count / 1_000_000.0)
+            count >= 1_000 -> String.format("%.1fK views", count / 1_000.0)
+            else -> "$count views"
+        }
+    } catch (e: NumberFormatException) {
+        "$viewCount views"
     }
 }
