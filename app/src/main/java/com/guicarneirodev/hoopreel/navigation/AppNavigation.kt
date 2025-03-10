@@ -36,7 +36,12 @@ fun AppNavigation() {
             val videoId = backStackEntry.arguments?.getString("videoId")
                 ?: return@composable
 
-            PlayerScreen(videoId = videoId)
+            PlayerScreen(
+                videoId = videoId,
+                onBackPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

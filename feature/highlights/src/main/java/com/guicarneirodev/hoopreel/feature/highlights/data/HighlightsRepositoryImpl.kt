@@ -6,6 +6,7 @@ import com.guicarneirodev.hoopreel.core.database.dao.LastUpdateDao
 import com.guicarneirodev.hoopreel.core.database.entity.HighlightEntity
 import com.guicarneirodev.hoopreel.core.database.entity.LastUpdateEntity
 import com.guicarneirodev.hoopreel.core.network.youtube.YouTubeApiService
+import com.guicarneirodev.hoopreel.core.utils.PlayerImages
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.Player
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.VideoHighlight
 import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
@@ -27,157 +28,157 @@ class HighlightsRepositoryImpl(
             id = "lebron-james",
             name = "LeBron James",
             searchTerms = "\"Lebron James\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.LEBRON_JAMES
         ),
         Player(
             id = "kevin-durant",
             name = "Kevin Durant",
             searchTerms = "\"Kevin Durant\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.KEVIN_DURANT
         ),
         Player(
             id = "steph-curry",
             name = "Stephen Curry",
             searchTerms = "\"Stephen Curry\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.STEPHEN_CURRY
         ),
         Player(
             id = "luka-doncic",
             name = "Luka Dončić",
             searchTerms = "\"Luka Doncic\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.LUKA_DONCIC
         ),
         Player(
             id = "shai-gilgeous-alexander",
             name = "Shai Gilgeous-Alexander",
             searchTerms = "\"Shai Gilgeous-Alexander\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.SHAI_GILGEOUS_ALEXANDER
         ),
         Player(
             id = "jokic",
             name = "Nikola Jokić",
             searchTerms = "\"Nikola Jokic\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.NIKOLA_JOKIC
         ),
         Player(
             id = "giannis",
             name = "Giannis Antetokounmpo",
             searchTerms = "\"Giannis Antetokounmpo\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.GIANNIS_ANTETOKOUNMPO
         ),
         Player(
             id = "tatum",
             name = "Jayson Tatum",
             searchTerms = "\"Jayson Tatum\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.JAYSON_TATUM
         ),
         Player(
             id = "anthony-davis",
             name = "Anthony Davis",
             searchTerms = "\"Anthony Davis\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.ANTHONY_DAVIS
         ),
         Player(
             id = "trae-young",
             name = "Trae Young",
             searchTerms = "\"Trae Young\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.TRAE_YOUNG
         ),
         Player(
             id = "victor-wembanyama",
             name = "Victor Wembanyama",
             searchTerms = "\"Victor Wembanyama\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.VICTOR_WEMBANYAMA
         ),
         Player(
             id = "james-harden",
             name = "James Harden",
             searchTerms = "\"James Harden\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.JAMES_HARDEN
         ),
         Player(
             id = "anthony-edwards",
             name = "Anthony Edwards",
             searchTerms = "\"Anthony Edwards\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.ANTHONY_EDWARDS
         ),
         Player(
             id = "russel-westbrook",
             name = "Russel Westbrook",
             searchTerms = "\"Russel Westbrook\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.RUSSELL_WESTBROOK
         ),
         Player(
             id = "kyrie-irving",
             name = "Kyrie Irving",
             searchTerms = "\"Kyrie Irving\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.KYRIE_IRVING
         ),
         Player(
             id = "ja-morant",
             name = "Ja Morant",
             searchTerms = "\"Ja Morant\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.JA_MORANT
         ),
         Player(
             id = "donovan-mitchell",
             name = "Donovan Mitchell",
             searchTerms = "\"Donovan Mitchell\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.DONOVAN_MITCHELL
         ),
         Player(
             id = "cade-cunningham",
             name = "Cade Cunningham",
             searchTerms = "\"Cade Cunningham\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.CADE_CUNNINGHAM
         ),
         Player(
             id = "joel-embiid",
             name = "Joel Embiid",
             searchTerms = "\"Joel Embiid\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.JOEL_EMBIID
         ),
         Player(
             id = "damian-lillard",
             name = "Damian Lillard",
             searchTerms = "\"Damian Lillard\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.DAMIAN_LILLARD
         ),
         Player(
             id = "devin-booker",
             name = "Devin Booker",
             searchTerms = "\"Devin Booker\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.DEVIN_BOOKER
         ),
         Player(
             id = "zion-williamson",
             name = "Zion Williamson",
             searchTerms = "\"Zion Williamson\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.ZION_WILLIAMSON
         ),
         Player(
             id = "lamelo-ball",
             name = "LaMelo Ball",
             searchTerms = "\"LaMelo Ball\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.LAMELO_BALL
         ),
         Player(
             id = "kawhi-leonard",
             name = "Kawhi Leonard",
             searchTerms = "\"Kawhi Leonard\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.KAWHI_LEONARD
         ),
         Player(
             id = "paolo-banchero",
             name = "Paolo Banchero",
             searchTerms = "\"Paolo Banchero\" highlights mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.PAOLO_BANCHERO
         ),
         Player(
             id = "allen-iverson",
             name = "Allen Iverson",
             searchTerms = "\"Allen Iverson\" mix",
-            imageUrl = "..."
+            imageUrl = PlayerImages.ALLEN_IVERSON
         ),
     )
 
