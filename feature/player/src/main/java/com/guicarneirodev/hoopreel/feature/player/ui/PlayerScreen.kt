@@ -20,11 +20,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Forward10
 import androidx.compose.material.icons.filled.Fullscreen
+import androidx.compose.material.icons.filled.FullscreenExit
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Replay10
@@ -46,6 +48,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -61,7 +64,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.guicarneirodev.hoopreel.feature.player.BasketballOrange
+import com.guicarneirodev.hoopreel.feature.player.ui.player.BasketballOrange
 import com.guicarneirodev.hoopreel.feature.player.presentation.PlayerUiState
 import com.guicarneirodev.hoopreel.feature.player.presentation.PlayerViewModel
 import com.guicarneirodev.hoopreel.feature.player.ui.player.LandscapeControls
@@ -83,29 +86,31 @@ fun PlayerScreen(
     val context = LocalContext.current
     var showControls by remember { mutableStateOf(true) }
     var isPlaying by remember { mutableStateOf(true) }
+    var showEmergencyExitButton by remember { mutableStateOf(false) }
     val lifecycleOwner = LocalLifecycleOwner.current
     val youTubePlayerState = remember { mutableStateOf<YouTubePlayer?>(null) }
     var currentTime by remember { mutableStateOf(0f) }
     var totalDuration by remember { mutableStateOf(0f) }
 
-    // Detectar orientação da tela
     val configuration = LocalConfiguration.current
     val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
 
-    // Resetar timer de controles quando showControls mudar para true
     LaunchedEffect(showControls) {
         if (showControls) {
-            delay(4000) // Esconder controles após 4 segundos de inatividade
-            showControls = false
+            delay(4000)
+            if (isLandscape) {
+                showEmergencyExitButton = true
+                showControls = false
+            } else {
+                showControls = false
+            }
         }
     }
 
-    // Garantir que controles apareçam inicialmente
     LaunchedEffect(Unit) {
         showControls = true
     }
 
-    // Load video data
     LaunchedEffect(videoId) {
         viewModel.loadVideo(videoId)
     }
@@ -117,25 +122,22 @@ fun PlayerScreen(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = {
-                        // Um toque apenas mostra/esconde os controles
                         showControls = !showControls
+                        if (showControls) {
+                            showEmergencyExitButton = false
+                        }
                         Log.d("PlayerScreen", "Tap detectado, showControls=$showControls")
                     },
                     onDoubleTap = { position ->
-                        // Duplo toque nas laterais avança/retrocede
-                        // Duplo toque no centro aciona play/pause
                         val width = size.width
                         when {
                             position.x < width * 0.3f -> {
-                                // Lado esquerdo - retroceder 10s
                                 youTubePlayerState.value?.seekTo(maxOf(currentTime - 10, 0f))
                             }
                             position.x > width * 0.7f -> {
-                                // Lado direito - avançar 10s
                                 youTubePlayerState.value?.seekTo(currentTime + 10)
                             }
                             else -> {
-                                // Centro - play/pause
                                 youTubePlayerState.value?.let { player ->
                                     if (isPlaying) {
                                         player.pause()
@@ -163,20 +165,17 @@ fun PlayerScreen(
             is PlayerUiState.Success -> {
                 val video = state.video
 
-                // YouTube Player
                 AndroidView(
                     factory = { ctx ->
                         YouTubePlayerView(ctx).apply {
                             enableAutomaticInitialization = false
 
-                            // Configurar e inicializar o player
                             val iFramePlayerOptions = IFramePlayerOptions.Builder()
-                                .controls(0) // Esconder controles nativos
+                                .controls(0)
                                 .build()
 
                             initialize(object : AbstractYouTubePlayerListener() {
                                 override fun onReady(player: YouTubePlayer) {
-                                    // Carregar o vídeo quando o player estiver pronto
                                     player.loadVideo(videoId, 0f)
                                     youTubePlayerState.value = player
                                 }
@@ -194,7 +193,6 @@ fun PlayerScreen(
                                 }
                             }, iFramePlayerOptions)
 
-                            // Gerenciar o ciclo de vida
                             lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
                                 override fun onDestroy(owner: LifecycleOwner) {
                                     release()
@@ -205,14 +203,12 @@ fun PlayerScreen(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                // Custom controls overlay - diferentes para portrait e landscape
                 AnimatedVisibility(
                     visible = showControls,
                     enter = fadeIn(initialAlpha = 0f),
                     exit = fadeOut()
                 ) {
                     if (isLandscape) {
-                        // Usar controles simplificados para landscape
                         LandscapeControls(
                             isPlaying = isPlaying,
                             currentTime = currentTime,
@@ -235,11 +231,12 @@ fun PlayerScreen(
                             onExitFullscreen = {
                                 val activity = context as? Activity
                                 activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                showControls = true
+                                showEmergencyExitButton = false
                             },
                             onBackPressed = onBackPressed
                         )
                     } else {
-                        // Controles padrão para modo retrato (portrait)
                         Box(
                             modifier = Modifier
                                 .fillMaxSize()
@@ -254,7 +251,6 @@ fun PlayerScreen(
                                     )
                                 )
                         ) {
-                            // Top bar with player info and back button
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -262,7 +258,6 @@ fun PlayerScreen(
                                     .padding(16.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                // Back button
                                 IconButton(
                                     onClick = onBackPressed
                                 ) {
@@ -275,7 +270,6 @@ fun PlayerScreen(
 
                                 Spacer(modifier = Modifier.width(16.dp))
 
-                                // Video info
                                 Column(
                                     modifier = Modifier.weight(1f)
                                 ) {
@@ -295,7 +289,6 @@ fun PlayerScreen(
                                     )
                                 }
 
-                                // Toggle fullscreen button
                                 IconButton(onClick = {
                                     val activity = context as? Activity
                                     activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
@@ -308,14 +301,12 @@ fun PlayerScreen(
                                 }
                             }
 
-                            // Center controls
                             Row(
                                 modifier = Modifier
                                     .align(Alignment.Center)
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ) {
-                                // Rewind 10s
                                 FloatingActionButton(
                                     onClick = {
                                         youTubePlayerState.value?.seekTo(maxOf(currentTime - 10, 0f))
@@ -330,7 +321,6 @@ fun PlayerScreen(
                                     )
                                 }
 
-                                // Play/Pause button (maior)
                                 FloatingActionButton(
                                     onClick = {
                                         youTubePlayerState.value?.let { player ->
@@ -353,7 +343,6 @@ fun PlayerScreen(
                                     )
                                 }
 
-                                // Forward 10s
                                 FloatingActionButton(
                                     onClick = {
                                         youTubePlayerState.value?.seekTo(currentTime + 10)
@@ -369,18 +358,15 @@ fun PlayerScreen(
                                 }
                             }
 
-                            // Bottom controls with progress bar
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .align(Alignment.BottomCenter)
                                     .padding(16.dp)
                             ) {
-                                // Progress bar
                                 Slider(
                                     value = if (totalDuration > 0) currentTime / totalDuration else 0f,
                                     onValueChange = { newValue ->
-                                        // Converter valor relativo para segundos
                                         val newTimeInSeconds = newValue * totalDuration
                                         youTubePlayerState.value?.seekTo(newTimeInSeconds)
                                     },
@@ -392,20 +378,17 @@ fun PlayerScreen(
                                     modifier = Modifier.fillMaxWidth()
                                 )
 
-                                // Time indicators and stats
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.SpaceBetween,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    // Current time / Total time
                                     Text(
                                         text = "${formatTime(currentTime.toLong())} / ${formatTime(totalDuration.toLong())}",
                                         color = Color.White,
                                         fontSize = 14.sp
                                     )
 
-                                    // View count
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -425,6 +408,37 @@ fun PlayerScreen(
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+
+                AnimatedVisibility(
+                    visible = isLandscape && !showControls && showEmergencyExitButton,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        IconButton(
+                            onClick = {
+                                val activity = context as? Activity
+                                activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                showControls = true
+                                showEmergencyExitButton = false
+                            },
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .padding(16.dp)
+                                .size(48.dp)
+                                .clip(CircleShape)
+                                .background(Color.Black.copy(alpha = 0.7f))
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.FullscreenExit,
+                                contentDescription = "Sair da tela cheia",
+                                tint = Color.White
+                            )
                         }
                     }
                 }

@@ -29,8 +29,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.times
-import com.guicarneirodev.hoopreel.feature.player.BasketballOrange
 import com.guicarneirodev.hoopreel.feature.player.ui.formatTime
 
 @Composable
@@ -50,7 +48,6 @@ fun LandscapeControls(
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.5f))
     ) {
-        // Botão de voltar
         IconButton(
             onClick = onBackPressed,
             modifier = Modifier
@@ -67,7 +64,6 @@ fun LandscapeControls(
             )
         }
 
-        // Botão de sair da tela cheia
         IconButton(
             onClick = onExitFullscreen,
             modifier = Modifier
@@ -84,7 +80,6 @@ fun LandscapeControls(
             )
         }
 
-        // Controles centrais - Mostrar apenas Play/Pause no centro
         IconButton(
             onClick = onPlayPause,
             modifier = Modifier
@@ -118,7 +113,6 @@ fun LandscapeControls(
             )
         }
 
-        // Botão de avançar à direita
         IconButton(
             onClick = onSeekForward,
             modifier = Modifier
@@ -135,14 +129,12 @@ fun LandscapeControls(
             )
         }
 
-        // Barra de progresso e tempos na parte inferior
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .padding(16.dp)
         ) {
-            // Tempo atual / Total
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -162,7 +154,6 @@ fun LandscapeControls(
                 )
             }
 
-            // Barra de progresso
             Slider(
                 value = if (totalDuration > 0f) currentTime / totalDuration else 0f,
                 onValueChange = {

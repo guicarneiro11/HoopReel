@@ -1,4 +1,4 @@
-package com.guicarneirodev.hoopreel.feature.highlights.ui
+package com.guicarneirodev.hoopreel.feature.player.ui.player
 
 import androidx.compose.ui.graphics.Color
 
