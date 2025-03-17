@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature:player"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))

@@ -19,7 +19,7 @@ class HoopReelApplication : Application() {
                 networkModule,
                 databaseModule,
                 playerModule,
-                highlightsModule
+                highlightsModule,
             )
         }
     }
