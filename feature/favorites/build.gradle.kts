@@ -42,12 +42,15 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature:player"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.material3)
+    implementation(libs.material.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
 
     // ViewModel
     implementation(libs.lifecycle.viewmodel)
@@ -56,4 +59,7 @@ dependencies {
     // DI Base
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    // Ícones
+    implementation(libs.material.icons.extended)
 }

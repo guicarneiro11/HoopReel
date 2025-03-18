@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":feature:highlights"))
+    implementation(project(":feature:favorites"))
 
     // Media
     implementation(libs.media.exoplayer)

@@ -10,8 +10,13 @@ import com.guicarneirodev.hoopreel.core.database.entity.HighlightEntity
 import com.guicarneirodev.hoopreel.core.database.entity.LastUpdateEntity
 
 @Database(
-    entities = [HighlightEntity::class, LastUpdateEntity::class, FavoriteEntity::class],
-    version = 1
+    entities = [
+        HighlightEntity::class,
+        LastUpdateEntity::class,
+        FavoriteEntity::class
+    ],
+    version = 2,
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun highlightDao(): HighlightDao

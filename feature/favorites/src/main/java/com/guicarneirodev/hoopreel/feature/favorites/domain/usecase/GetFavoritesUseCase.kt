@@ -2,7 +2,7 @@ package com.guicarneirodev.hoopreel.feature.favorites.domain.usecase
 
 import com.guicarneirodev.hoopreel.core.network.youtube.model.VideoStatistics
 import com.guicarneirodev.hoopreel.feature.favorites.domain.FavoriteRepository
-import com.guicarneirodev.hoopreel.feature.player.domain.model.Video
+import com.guicarneirodev.hoopreel.feature.favorites.domain.model.Video
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

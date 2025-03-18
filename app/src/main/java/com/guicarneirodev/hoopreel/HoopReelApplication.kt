@@ -4,6 +4,7 @@ import android.app.Application
 import com.guicarneirodev.hoopreel.core.di.coreModule
 import com.guicarneirodev.hoopreel.core.di.databaseModule
 import com.guicarneirodev.hoopreel.core.di.networkModule
+import com.guicarneirodev.hoopreel.feature.favorites.di.favoritesModule
 import com.guicarneirodev.hoopreel.feature.highlights.di.highlightsModule
 import com.guicarneirodev.hoopreel.feature.player.di.playerModule
 import org.koin.android.ext.koin.androidContext
@@ -20,6 +21,7 @@ class HoopReelApplication : Application() {
                 databaseModule,
                 playerModule,
                 highlightsModule,
+                favoritesModule
             )
         }
     }

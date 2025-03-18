@@ -10,9 +10,12 @@ val databaseModule = module {
             get(),
             AppDatabase::class.java,
             AppDatabase.DATABASE_NAME
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     single { get<AppDatabase>().highlightDao() }
     single { get<AppDatabase>().lastUpdateDao() }
+    single { get<AppDatabase>().favoriteDao() }
 }
