@@ -25,7 +25,8 @@ class FavoriteViewModel(
 
             getFavoritesUseCase()
                 .catch { error ->
-                    _uiState.value = FavoriteUiState.Error(error.message ?: "Erro desconhecido ao carregar favoritos")
+                    _uiState.value =
+                        FavoriteUiState.Error(error.message ?: "Erro ao carregar favoritos")
                 }
                 .collect { favorites ->
                     if (favorites.isEmpty()) {

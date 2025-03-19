@@ -18,11 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.guicarneirodev.hoopreel.feature.favorites.domain.usecase.GetFavoritesUseCase
+import com.guicarneirodev.hoopreel.feature.favorites.domain.usecase.GetFavoritesUseCase.FavoriteVideo
 
 @Composable
 fun FavoritesList(
-    favorites: List<GetFavoritesUseCase.FavoriteVideo>,
+    favorites: List<FavoriteVideo>,
     onVideoClick: (String) -> Unit
 ) {
     LazyColumn(
@@ -33,7 +33,7 @@ fun FavoritesList(
             Text(
                 text = "Meus Favoritos",
                 color = Color.White,
-                fontSize = 28.sp,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
