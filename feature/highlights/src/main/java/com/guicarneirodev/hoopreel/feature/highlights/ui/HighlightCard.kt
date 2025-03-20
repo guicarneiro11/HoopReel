@@ -44,7 +44,6 @@ fun HighlightCard(
         )
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Thumbnail
             AsyncImage(
                 model = highlight.thumbnailUrl,
                 contentDescription = highlight.title,
@@ -52,7 +51,6 @@ fun HighlightCard(
                 modifier = Modifier.fillMaxSize()
             )
 
-            // Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,7 +65,6 @@ fun HighlightCard(
                     )
             )
 
-            // Title and Info
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -90,7 +87,6 @@ fun HighlightCard(
                 )
             }
 
-            // Play Icon Overlay
             Icon(
                 imageVector = Icons.Default.PlayCircle,
                 contentDescription = "Play",

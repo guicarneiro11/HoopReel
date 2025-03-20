@@ -183,10 +183,8 @@ class HighlightsRepositoryImpl(
     )
 
     override suspend fun getPlayers(): List<Player> = coroutineScope {
-        // Verificar se precisa atualizar o cache
         if (shouldUpdateCache()) {
             try {
-                // Buscar highlights de todos os jogadores em paralelo
                 val deferredPlayers = players.map { player ->
                     async {
                         val highlights = getPlayerHighlightsFromYoutube(player.id, player.searchTerms)
@@ -195,17 +193,14 @@ class HighlightsRepositoryImpl(
                         player.copy(highlights = highlights)
                     }
                 }
-                // Aguardar todos os resultados
                 deferredPlayers.awaitAll()
             } catch (e: Exception) {
                 Log.e("HighlightsRepo", "Error fetching from API, using cache", e)
-                // Em caso de erro, usar cache para todos os jogadores
                 players.map { player ->
                     player.copy(highlights = getFromCache(player.id))
                 }
             }
         } else {
-            // Usar cache para todos os jogadores
             players.map { player ->
                 player.copy(highlights = getFromCache(player.id))
             }
@@ -272,7 +267,7 @@ class HighlightsRepositoryImpl(
         return try {
             val response = youTubeApiService.searchVideos(
                 query = searchTerms,
-                maxResults = 20 // Aumentar para ter mais opções para filtrar
+                maxResults = 20
             )
 
             response.items
@@ -281,14 +276,12 @@ class HighlightsRepositoryImpl(
                     val playerName = players.find { it.id == playerId }?.name?.lowercase()
                         ?: return@mapNotNull null
 
-                    // Verificar se o título contém o nome do jogador e não contém outros nomes
                     val isRelevant = title.contains(playerName) &&
                             !players.any { otherPlayer ->
                                 otherPlayer.id != playerId &&
                                         title.contains(otherPlayer.name.lowercase())
                             }
 
-                    // Extrair videoId usando when
                     val videoId = videoItem.id.let { id ->
                         when (id) {
                             is Map<*, *> -> id["videoId"] as? String
@@ -310,7 +303,7 @@ class HighlightsRepositoryImpl(
                         )
                     } else null
                 }
-                .take(10) // Limitar aos 10 mais relevantes
+                .take(10)
         } catch (e: Exception) {
             Log.e("HighlightsRepo", "Error fetching highlights for $playerId", e)
             emptyList()

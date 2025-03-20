@@ -32,7 +32,6 @@ fun PlayerHighlightsRow(
             .fillMaxWidth()
             .padding(vertical = 16.dp)
     ) {
-        // Player Header
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -56,7 +55,6 @@ fun PlayerHighlightsRow(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Highlights List
         LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)

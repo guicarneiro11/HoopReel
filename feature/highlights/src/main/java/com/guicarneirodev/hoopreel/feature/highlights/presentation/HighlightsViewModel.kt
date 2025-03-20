@@ -1,6 +1,5 @@
 package com.guicarneirodev.hoopreel.feature.highlights.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.Player
