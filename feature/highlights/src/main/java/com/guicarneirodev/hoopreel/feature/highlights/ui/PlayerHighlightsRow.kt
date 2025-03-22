@@ -50,13 +50,6 @@ fun PlayerHighlightsRow(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Text(
-                text = "Ver todos",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(end = 4.dp)
-            )
-
             Icon(
                 imageVector = Icons.Default.ChevronRight,
                 contentDescription = "Ver todos os highlights de ${player.name}",
