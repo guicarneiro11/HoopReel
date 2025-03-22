@@ -1,5 +1,6 @@
 package com.guicarneirodev.hoopreel.feature.highlights.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,6 +26,7 @@ import com.guicarneirodev.hoopreel.feature.highlights.domain.model.Player
 fun PlayerHighlightsRow(
     player: Player,
     onVideoClick: (String) -> Unit,
+    onSeeAllClick: (String) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -35,7 +37,9 @@ fun PlayerHighlightsRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .clickable { onSeeAllClick(player.id) }
+                .padding(horizontal = 16.dp)
+                .padding(vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -46,9 +50,16 @@ fun PlayerHighlightsRow(
 
             Spacer(modifier = Modifier.weight(1f))
 
+            Text(
+                text = "Ver todos",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(end = 4.dp)
+            )
+
             Icon(
                 imageVector = Icons.Default.ChevronRight,
-                contentDescription = "See all",
+                contentDescription = "Ver todos os highlights de ${player.name}",
                 tint = MaterialTheme.colorScheme.primary
             )
         }
