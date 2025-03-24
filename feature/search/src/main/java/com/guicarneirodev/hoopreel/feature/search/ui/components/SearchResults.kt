@@ -77,7 +77,6 @@ fun SearchResultItem(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Thumbnail com overlay
             Box(
                 modifier = Modifier
                     .size(width = 120.dp, height = 80.dp)
@@ -93,7 +92,6 @@ fun SearchResultItem(
                     modifier = Modifier.fillMaxSize()
                 )
 
-                // Overlay gradiente e ícone de play
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -119,7 +117,6 @@ fun SearchResultItem(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Informações do vídeo
             Column(
                 modifier = Modifier.weight(1f)
             ) {

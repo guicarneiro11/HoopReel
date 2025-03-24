@@ -13,6 +13,10 @@ class PlayerRepositoryImpl(
         return try {
             Log.d("PlayerRepo", "Fetching video details for id: $videoId")
 
+            if (videoId.isBlank()) {
+                throw IllegalArgumentException("Video ID cannot be empty")
+            }
+
             val response = youTubeApiService.getVideos(id = videoId)
             Log.d("PlayerRepo", "Response received: $response")
 

@@ -30,22 +30,38 @@ class SearchRepositoryImpl(
                 maxResults = 20
             )
 
-            response.items.map { item ->
-                val videoId = item.getVideoId()
-                val title = item.snippet.title.decodeHtml()
-                val thumbnailUrl = item.snippet.thumbnails.high.url
-                val publishedAt = item.snippet.publishedAt
+            response.items.mapNotNull { item ->
+                val videoId = when (val id = item.id) {
+                    is String -> id
+                    is Map<*, *> -> id["videoId"] as? String
+                    else -> {
+                        if (id::class.java.simpleName == "VideoId") {
+                            try {
+                                val method = id::class.java.getMethod("getVideoId")
+                                method.invoke(id) as? String
+                            } catch (e: Exception) {
+                                Log.e("SearchRepo", "Error extracting videoId from VideoId object", e)
+                                null
+                            }
+                        } else {
+                            Log.e("SearchRepo", "Unknown id type: ${id::class.java}")
+                            null
+                        }
+                    }
+                }
 
-                val player = highlightsRepository.getPlayerByVideoId(videoId)
-                val playerName = player?.name
-
-                SearchResult(
-                    id = videoId,
-                    title = title,
-                    thumbnailUrl = thumbnailUrl,
-                    playerName = playerName,
-                    publishedAt = publishedAt
-                )
+                if (videoId.isNullOrEmpty()) {
+                    Log.e("SearchRepo", "Empty or null videoId for item: $item")
+                    null
+                } else {
+                    SearchResult(
+                        id = videoId,
+                        title = item.snippet.title.decodeHtml(),
+                        thumbnailUrl = item.snippet.thumbnails.high.url,
+                        playerName = null,
+                        publishedAt = item.snippet.publishedAt
+                    )
+                }
             }
         } catch (e: Exception) {
             Log.e("SearchRepo", "Error searching videos", e)
