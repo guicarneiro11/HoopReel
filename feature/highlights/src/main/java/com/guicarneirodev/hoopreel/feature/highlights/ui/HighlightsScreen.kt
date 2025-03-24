@@ -34,7 +34,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HighlightsScreen(
     viewModel: HighlightsViewModel = koinViewModel(),
-    onVideoClick: (String) -> Unit
+    onVideoClick: (String) -> Unit,
+    onSeeAllClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
@@ -66,7 +67,8 @@ fun HighlightsScreen(
                     items(state.players) { player ->
                         PlayerHighlightsRow(
                             player = player,
-                            onVideoClick = onVideoClick
+                            onVideoClick = onVideoClick,
+                            onSeeAllClick = onSeeAllClick
                         )
                     }
                 }
@@ -86,7 +88,7 @@ fun HighlightsScreen(
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(onClick = viewModel::refresh) {
-                        Text("Try Again")
+                        Text("Tentar novamente")
                     }
                 }
             }

@@ -46,6 +46,46 @@ class HighlightsViewModel(
             }
         }
     }
+
+    fun loadPlayerDetails(playerId: String) {
+        val currentState = _uiState.value
+        if (currentState is HighlightsUiState.Success) {
+            val playerExists = currentState.players.any { it.id == playerId }
+
+            if (playerExists) {
+                return
+            }
+        }
+
+        viewModelScope.launch {
+            _uiState.value = HighlightsUiState.Loading
+            try {
+                val playerHighlights = repository.getPlayerHighlights(playerId)
+
+                if (currentState is HighlightsUiState.Success) {
+                    val updatedPlayers = currentState.players.toMutableList()
+                    val playerIndex = updatedPlayers.indexOfFirst { it.id == playerId }
+
+                    if (playerIndex >= 0) {
+                        updatedPlayers[playerIndex] = updatedPlayers[playerIndex].copy(
+                            highlights = playerHighlights
+                        )
+                    } else {
+                        val players = repository.getPlayers()
+                        _uiState.value = HighlightsUiState.Success(players)
+                        return@launch
+                    }
+
+                    _uiState.value = HighlightsUiState.Success(updatedPlayers)
+                } else {
+                    val players = repository.getPlayers()
+                    _uiState.value = HighlightsUiState.Success(players)
+                }
+            } catch (e: Exception) {
+                _uiState.value = HighlightsUiState.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
 }
 
 sealed class HighlightsUiState {

@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.guicarneirodev.hoopreel.feature.favorites.ui.FavoritesScreen
 import com.guicarneirodev.hoopreel.feature.highlights.ui.HighlightsScreen
+import com.guicarneirodev.hoopreel.feature.highlights.ui.details.PlayerDetailsScreen
 import com.guicarneirodev.hoopreel.feature.player.ui.PlayerScreen
 
 @Composable
@@ -23,6 +24,34 @@ fun AppNavigation(navController: NavController) {
                     navController.navigate(
                         NavDestination.Player.createRoute(videoId)
                     )
+                },
+                onSeeAllClick = { playerId ->
+                    navController.navigate(
+                        NavDestination.PlayerDetails.createRoute(playerId)
+                    )
+                }
+            )
+        }
+
+        // Rota de detalhes do jogador
+        composable(
+            route = NavDestination.PlayerDetails.route,
+            arguments = listOf(
+                navArgument("playerId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val playerId = backStackEntry.arguments?.getString("playerId")
+                ?: return@composable
+
+            PlayerDetailsScreen(
+                playerId = playerId,
+                onVideoClick = { videoId ->
+                    navController.navigate(
+                        NavDestination.Player.createRoute(videoId)
+                    )
+                },
+                onBackPressed = {
+                    navController.popBackStack()
                 }
             )
         }
