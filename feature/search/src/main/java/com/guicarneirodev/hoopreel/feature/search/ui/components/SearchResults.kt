@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.guicarneirodev.hoopreel.core.utils.formatIsoDate
 import com.guicarneirodev.hoopreel.feature.search.domain.model.SearchResult
 
 @Composable
@@ -141,7 +142,7 @@ fun SearchResultItem(
                 }
 
                 Text(
-                    text = result.publishedAt,
+                    text = result.publishedAt.formatIsoDate(),
                     color = Color.White.copy(alpha = 0.7f),
                     fontSize = 12.sp
                 )

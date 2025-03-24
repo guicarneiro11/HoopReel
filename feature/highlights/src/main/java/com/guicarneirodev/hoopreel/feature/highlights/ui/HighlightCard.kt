@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.guicarneirodev.hoopreel.core.utils.formatIsoDate
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.VideoHighlight
 
 @Composable
@@ -81,7 +82,7 @@ fun HighlightCard(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 Text(
-                    text = highlight.publishedAt,
+                    text = highlight.publishedAt.formatIsoDate(),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.7f)
                 )
