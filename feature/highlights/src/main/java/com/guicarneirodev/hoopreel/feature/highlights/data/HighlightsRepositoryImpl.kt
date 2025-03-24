@@ -1,5 +1,7 @@
 package com.guicarneirodev.hoopreel.feature.highlights.data
 
+import android.os.Build
+import android.text.Html
 import android.util.Log
 import com.guicarneirodev.hoopreel.core.database.dao.HighlightDao
 import com.guicarneirodev.hoopreel.core.database.dao.LastUpdateDao
@@ -252,7 +254,7 @@ class HighlightsRepositoryImpl(
         return highlightDao.getHighlightsForPlayer(playerId).map { entity ->
             VideoHighlight(
                 id = entity.id,
-                title = entity.title,
+                title = entity.title.decodeHtml(),
                 thumbnailUrl = entity.thumbnailUrl,
                 publishedAt = entity.publishedAt,
                 views = "N/A"
@@ -272,7 +274,7 @@ class HighlightsRepositoryImpl(
 
             response.items
                 .mapNotNull { videoItem ->
-                    val title = videoItem.snippet.title.lowercase()
+                    val title = videoItem.snippet.title.decodeHtml().lowercase()
                     val playerName = players.find { it.id == playerId }?.name?.lowercase()
                         ?: return@mapNotNull null
 
@@ -296,7 +298,7 @@ class HighlightsRepositoryImpl(
                     if (isRelevant && videoId != null) {
                         VideoHighlight(
                             id = videoId,
-                            title = videoItem.snippet.title,
+                            title = videoItem.snippet.title.decodeHtml(),
                             thumbnailUrl = videoItem.snippet.thumbnails.high.url,
                             views = "N/A",
                             publishedAt = videoItem.snippet.publishedAt
@@ -319,5 +321,14 @@ class HighlightsRepositoryImpl(
         return players.find { player ->
             player.highlights.any { highlight -> highlight.id == videoId }
         }
+    }
+}
+
+fun String.decodeHtml(): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(this, Html.FROM_HTML_MODE_LEGACY).toString()
+    } else {
+        @Suppress("DEPRECATION")
+        Html.fromHtml(this).toString()
     }
 }
