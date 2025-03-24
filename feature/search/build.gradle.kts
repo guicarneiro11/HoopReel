@@ -43,6 +43,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature:highlights"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -56,4 +57,10 @@ dependencies {
     // DI Base
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    // Coil
+    implementation(libs.coil.compose)
+
+    // Ícones
+    implementation(libs.material.icons.extended)
 }

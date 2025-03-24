@@ -33,7 +33,7 @@ sealed class BottomNavItem(
     )
 
     data object Search : BottomNavItem(
-        route = "search",
+        route = NavDestination.Search.route,
         icon = Icons.Default.Search,
         label = "Buscar"
     )

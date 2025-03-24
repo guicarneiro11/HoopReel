@@ -7,6 +7,7 @@ import com.guicarneirodev.hoopreel.core.di.networkModule
 import com.guicarneirodev.hoopreel.feature.favorites.di.favoritesModule
 import com.guicarneirodev.hoopreel.feature.highlights.di.highlightsModule
 import com.guicarneirodev.hoopreel.feature.player.di.playerModule
+import com.guicarneirodev.hoopreel.feature.search.di.searchModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -21,7 +22,8 @@ class HoopReelApplication : Application() {
                 databaseModule,
                 playerModule,
                 highlightsModule,
-                favoritesModule
+                favoritesModule,
+                searchModule
             )
         }
     }

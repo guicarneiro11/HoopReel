@@ -11,6 +11,7 @@ import com.guicarneirodev.hoopreel.feature.favorites.ui.FavoritesScreen
 import com.guicarneirodev.hoopreel.feature.highlights.ui.HighlightsScreen
 import com.guicarneirodev.hoopreel.feature.highlights.ui.details.PlayerDetailsScreen
 import com.guicarneirodev.hoopreel.feature.player.ui.PlayerScreen
+import com.guicarneirodev.hoopreel.feature.search.ui.SearchScreen
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -33,7 +34,6 @@ fun AppNavigation(navController: NavController) {
             )
         }
 
-        // Rota de detalhes do jogador
         composable(
             route = NavDestination.PlayerDetails.route,
             arguments = listOf(
@@ -58,6 +58,16 @@ fun AppNavigation(navController: NavController) {
 
         composable(NavDestination.Favorites.route) {
             FavoritesScreen(
+                onVideoClick = { videoId ->
+                    navController.navigate(
+                        NavDestination.Player.createRoute(videoId)
+                    )
+                }
+            )
+        }
+
+        composable(NavDestination.Search.route) {
+            SearchScreen(
                 onVideoClick = { videoId ->
                     navController.navigate(
                         NavDestination.Player.createRoute(videoId)
