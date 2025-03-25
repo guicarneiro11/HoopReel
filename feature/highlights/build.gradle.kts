@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.material.compose)
     implementation(libs.androidx.material3)
+    implementation(libs.compose.livedata)
 
     // Coil
     implementation(libs.coil.compose)
@@ -62,4 +63,8 @@ dependencies {
 
     // Icons
     implementation(libs.material.icons.extended)
+
+    // WorkManager
+    implementation(libs.work.runtime)
+    implementation(libs.koin.workmanager)
 }

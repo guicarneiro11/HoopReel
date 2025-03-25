@@ -1,6 +1,7 @@
 package com.guicarneirodev.hoopreel.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -37,6 +38,12 @@ sealed class BottomNavItem(
         icon = Icons.Default.Search,
         label = "Buscar"
     )
+
+    data object Statistics : BottomNavItem(
+        route = NavDestination.Statistics.route,
+        icon = Icons.Default.BarChart,
+        label = "Estatísticas"
+    )
 }
 
 @Composable
@@ -47,7 +54,8 @@ fun HoopReelBottomNavigation(
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Favorites,
-        BottomNavItem.Search
+        BottomNavItem.Search,
+        BottomNavItem.Statistics
     )
 
     NavigationBar(

@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -76,4 +75,8 @@ dependencies {
     // DI Base
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
+
+    // WorkManager
+    implementation(libs.work.runtime)
+    implementation(libs.koin.workmanager)
 }

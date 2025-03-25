@@ -9,12 +9,15 @@ import com.guicarneirodev.hoopreel.core.database.entity.HighlightEntity
 import com.guicarneirodev.hoopreel.core.database.entity.LastUpdateEntity
 import com.guicarneirodev.hoopreel.core.network.youtube.YouTubeApiService
 import com.guicarneirodev.hoopreel.core.utils.PlayerImages
+import com.guicarneirodev.hoopreel.core.utils.formatIsoDate
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.Player
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.VideoHighlight
 import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.util.concurrent.TimeUnit
 
 class HighlightsRepositoryImpl(
@@ -320,6 +323,43 @@ class HighlightsRepositoryImpl(
     override fun getPlayerByVideoId(videoId: String): Player? {
         return players.find { player ->
             player.highlights.any { highlight -> highlight.id == videoId }
+        }
+    }
+
+    override fun observePlayerHighlights(playerId: String): Flow<List<VideoHighlight>> {
+        return highlightDao.getHighlightsFlow(playerId)
+            .map { entities ->
+                entities.map { entity ->
+                    VideoHighlight(
+                        id = entity.id,
+                        title = entity.title.decodeHtml(),
+                        thumbnailUrl = entity.thumbnailUrl,
+                        publishedAt = entity.publishedAt.formatIsoDate(),
+                        views = "N/A"
+                    )
+                }
+            }
+    }
+
+    override fun observeAllPlayers(): Flow<List<Player>> {
+        return highlightDao.getAllPlayerIds().map { playerIds ->
+            playerIds.mapNotNull { playerId ->
+                players.find { it.id == playerId }?.let { playerTemplate ->
+                    highlightDao.getHighlightsForPlayer(playerId).let { highlights ->
+                        playerTemplate.copy(
+                            highlights = highlights.map { entity ->
+                                VideoHighlight(
+                                    id = entity.id,
+                                    title = entity.title.decodeHtml(),
+                                    thumbnailUrl = entity.thumbnailUrl,
+                                    publishedAt = entity.publishedAt.formatIsoDate(),
+                                    views = "N/A"
+                                )
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }

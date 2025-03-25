@@ -83,4 +83,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // WorkManager
+    implementation(libs.work.runtime)
+    implementation(libs.koin.workmanager)
+
+    // Ícones
+    implementation(libs.material.icons.extended)
 }

@@ -10,6 +10,7 @@ import androidx.navigation.navArgument
 import com.guicarneirodev.hoopreel.feature.favorites.ui.FavoritesScreen
 import com.guicarneirodev.hoopreel.feature.highlights.ui.HighlightsScreen
 import com.guicarneirodev.hoopreel.feature.highlights.ui.details.PlayerDetailsScreen
+import com.guicarneirodev.hoopreel.feature.highlights.ui.statistics.StatisticsScreen
 import com.guicarneirodev.hoopreel.feature.player.ui.PlayerScreen
 import com.guicarneirodev.hoopreel.feature.search.ui.SearchScreen
 
@@ -91,6 +92,10 @@ fun AppNavigation(navController: NavController) {
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(NavDestination.Statistics.route) {
+            StatisticsScreen()
         }
     }
 }

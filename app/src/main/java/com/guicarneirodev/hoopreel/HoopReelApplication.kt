@@ -10,12 +10,21 @@ import com.guicarneirodev.hoopreel.feature.player.di.playerModule
 import com.guicarneirodev.hoopreel.feature.search.di.searchModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import androidx.work.*
+import com.guicarneirodev.hoopreel.feature.highlights.di.statisticsModule
+import com.guicarneirodev.hoopreel.feature.highlights.di.workManagerModule
+import com.guicarneirodev.hoopreel.feature.highlights.workers.HighlightsUpdateWorker
+import org.koin.androidx.workmanager.koin.workManagerFactory
+import java.util.concurrent.TimeUnit
 
 class HoopReelApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        // Koin setup
         startKoin {
             androidContext(this@HoopReelApplication)
+            workManagerFactory()
             modules(
                 coreModule,
                 networkModule,
@@ -23,8 +32,35 @@ class HoopReelApplication : Application() {
                 playerModule,
                 highlightsModule,
                 favoritesModule,
-                searchModule
+                searchModule,
+                workManagerModule,
+                statisticsModule
             )
         }
+
+        setupWorkManager()
+    }
+
+    private fun setupWorkManager() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val updateHighlightsRequest = PeriodicWorkRequestBuilder<HighlightsUpdateWorker>(
+            1, TimeUnit.DAYS
+        )
+            .setConstraints(constraints)
+            .setBackoffCriteria(
+                BackoffPolicy.LINEAR,
+                30, TimeUnit.MINUTES
+            )
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+            "update_highlights",
+            ExistingPeriodicWorkPolicy.UPDATE,
+            updateHighlightsRequest
+        )
     }
 }

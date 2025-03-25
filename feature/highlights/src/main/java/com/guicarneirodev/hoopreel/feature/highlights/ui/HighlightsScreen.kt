@@ -39,6 +39,7 @@ fun HighlightsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val isRefreshing by viewModel.isRefreshing.collectAsStateWithLifecycle()
+    val players by viewModel.players.collectAsStateWithLifecycle()
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
@@ -60,17 +61,21 @@ fun HighlightsScreen(
                 )
             }
             is HighlightsUiState.Success -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(vertical = 16.dp)
-                ) {
-                    items(state.players) { player ->
-                        PlayerHighlightsRow(
-                            player = player,
-                            onVideoClick = onVideoClick,
-                            onSeeAllClick = onSeeAllClick
-                        )
+                if (players.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(vertical = 16.dp)
+                    ) {
+                        items(players) { player ->
+                            PlayerHighlightsRow(
+                                player = player,
+                                onVideoClick = onVideoClick,
+                                onSeeAllClick = onSeeAllClick
+                            )
+                        }
                     }
+                } else {
+                    //
                 }
             }
             is HighlightsUiState.Error -> {

@@ -5,7 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.guicarneirodev.hoopreel.feature.highlights.domain.model.Player
 import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class HighlightsViewModel(
@@ -17,8 +21,28 @@ class HighlightsViewModel(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing = _isRefreshing.asStateFlow()
 
+    val players: StateFlow<List<Player>> = repository.observeAllPlayers()
+        .catch { emit(emptyList()) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = emptyList()
+        )
+
     init {
-        loadPlayers()
+        viewModelScope.launch {
+            // Observando mudanças no players e atualizando o uiState
+            players.collect { playerList ->
+                if (playerList.isEmpty()) {
+                    // Se não tiver dados em cache, carregar da API
+                    if (_uiState.value !is HighlightsUiState.Loading) {
+                        loadPlayers()
+                    }
+                } else {
+                    _uiState.value = HighlightsUiState.Success(playerList)
+                }
+            }
+        }
     }
 
     fun refresh() {
@@ -26,7 +50,6 @@ class HighlightsViewModel(
             _isRefreshing.value = true
             try {
                 repository.refreshData()
-                loadPlayers()
             } catch (e: Exception) {
                 _uiState.value = HighlightsUiState.Error(e.message ?: "Unknown error")
             } finally {
@@ -40,7 +63,9 @@ class HighlightsViewModel(
             _uiState.value = HighlightsUiState.Loading
             try {
                 val players = repository.getPlayers()
-                _uiState.value = HighlightsUiState.Success(players)
+                if (this@HighlightsViewModel.players.value.isEmpty()) {
+                    _uiState.value = HighlightsUiState.Success(players)
+                }
             } catch (e: Exception) {
                 _uiState.value = HighlightsUiState.Error(e.message ?: "Unknown error")
             }

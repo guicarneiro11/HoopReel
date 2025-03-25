@@ -27,4 +27,10 @@ interface FavoriteDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites WHERE videoId = :videoId)")
     fun isFavorite(videoId: String): Flow<Boolean>
+
+    @Query("SELECT COUNT(*) FROM favorites")
+    fun getFavoritesCount(): Flow<Int>
+
+    @Query("SELECT * FROM favorites WHERE addedTimestamp >= :startTime ORDER BY addedTimestamp DESC")
+    fun getFavoritesSince(startTime: Long): Flow<List<FavoriteEntity>>
 }
