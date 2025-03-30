@@ -11,4 +11,5 @@ sealed class NavDestination(val route: String) {
         fun createRoute(playerId: String) = "player-details/$playerId"
     }
     data object Statistics: NavDestination("statistics")
+    data object ThemeSelection: NavDestination("theme-selection")
 }

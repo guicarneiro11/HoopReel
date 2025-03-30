@@ -14,6 +14,7 @@ import androidx.work.*
 import com.guicarneirodev.hoopreel.feature.highlights.di.statisticsModule
 import com.guicarneirodev.hoopreel.feature.highlights.di.workManagerModule
 import com.guicarneirodev.hoopreel.feature.highlights.workers.HighlightsUpdateWorker
+import com.guicarneirodev.hoopreel.feature.settings.di.settingsModule
 import org.koin.androidx.workmanager.koin.workManagerFactory
 import java.util.concurrent.TimeUnit
 
@@ -34,7 +35,8 @@ class HoopReelApplication : Application() {
                 favoritesModule,
                 searchModule,
                 workManagerModule,
-                statisticsModule
+                statisticsModule,
+                settingsModule
             )
         }
 

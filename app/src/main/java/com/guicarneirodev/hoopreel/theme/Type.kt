@@ -1,4 +1,4 @@
-package com.guicarneirodev.hoopreel.ui.theme
+package com.guicarneirodev.hoopreel.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

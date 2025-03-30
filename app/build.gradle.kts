@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":feature:highlights"))
     implementation(project(":feature:search"))
     implementation(project(":feature:favorites"))
+    implementation(project(":feature:settings"))
 
     // Compose
     implementation(libs.androidx.activity.compose)
@@ -78,6 +79,9 @@ dependencies {
     // Debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Coil
+    implementation(libs.coil.compose)
 
     // Testing
     testImplementation(libs.junit)

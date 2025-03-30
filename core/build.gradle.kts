@@ -49,6 +49,12 @@ android {
 }
 
 dependencies {
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.material3)
+    implementation(libs.material.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -79,4 +85,8 @@ dependencies {
     // WorkManager
     implementation(libs.work.runtime)
     implementation(libs.koin.workmanager)
+
+    // DataStore
+    implementation(libs.datastore.preferences)
+    implementation(libs.datastore.core)
 }

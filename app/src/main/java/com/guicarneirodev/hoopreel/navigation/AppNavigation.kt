@@ -13,6 +13,7 @@ import com.guicarneirodev.hoopreel.feature.highlights.ui.details.PlayerDetailsSc
 import com.guicarneirodev.hoopreel.feature.highlights.ui.statistics.StatisticsScreen
 import com.guicarneirodev.hoopreel.feature.player.ui.PlayerScreen
 import com.guicarneirodev.hoopreel.feature.search.ui.SearchScreen
+import com.guicarneirodev.hoopreel.feature.settings.ui.ThemeSelectionScreen
 
 @Composable
 fun AppNavigation(navController: NavController) {
@@ -96,6 +97,14 @@ fun AppNavigation(navController: NavController) {
 
         composable(NavDestination.Statistics.route) {
             StatisticsScreen()
+        }
+
+        composable(NavDestination.ThemeSelection.route) {
+            ThemeSelectionScreen(
+                onBackPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -13,8 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.guicarneirodev.hoopreel.ui.theme.BasketballOrange
-import com.guicarneirodev.hoopreel.ui.theme.NetflixDarkGray
+import com.guicarneirodev.hoopreel.theme.BasketballOrange
+import com.guicarneirodev.hoopreel.theme.NetflixDarkGray
 
 sealed class BottomNavItem(
     val route: String,
@@ -44,6 +45,12 @@ sealed class BottomNavItem(
         icon = Icons.Default.BarChart,
         label = "Estatísticas"
     )
+
+    data object ThemesNav : BottomNavItem(
+        route = NavDestination.ThemeSelection.route,
+        icon = Icons.Default.Palette,
+        label = "Temas"
+    )
 }
 
 @Composable
@@ -55,7 +62,8 @@ fun HoopReelBottomNavigation(
         BottomNavItem.Home,
         BottomNavItem.Favorites,
         BottomNavItem.Search,
-        BottomNavItem.Statistics
+        BottomNavItem.Statistics,
+        BottomNavItem.ThemesNav
     )
 
     NavigationBar(

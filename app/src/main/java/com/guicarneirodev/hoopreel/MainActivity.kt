@@ -12,20 +12,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.guicarneirodev.hoopreel.navigation.AppNavigation
 import com.guicarneirodev.hoopreel.navigation.HoopReelBottomNavigation
 import com.guicarneirodev.hoopreel.navigation.NavDestination
-import com.guicarneirodev.hoopreel.ui.theme.HoopReelTheme
+import com.guicarneirodev.hoopreel.feature.settings.presentation.ThemeViewModel
+import com.guicarneirodev.hoopreel.theme.HoopReelTheme
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HoopReelTheme {
-                val navController = rememberNavController()
+            // Injetar o ViewModel dos temas
+            val themeViewModel: ThemeViewModel = koinViewModel()
+            // Obter o tema atual como um estado
+            val currentTheme by themeViewModel.currentTheme.collectAsStateWithLifecycle()
 
+            // Usar o tema selecionado pelo usuário
+            HoopReelTheme(currentTheme = currentTheme) {
+                val navController = rememberNavController()
                 var isNavGraphReady by remember { mutableStateOf(false) }
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -34,6 +42,7 @@ class MainActivity : ComponentActivity() {
                 val showBottomBar = when {
                     !isNavGraphReady -> false
                     currentRoute?.startsWith("player/") == true -> false
+                    currentRoute == NavDestination.ThemeSelection.route -> false // Esconder na tela de temas
                     else -> true
                 }
 
