@@ -125,7 +125,6 @@ fun PlayerScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
             .then(
                 if (!isLandscape) {
                     Modifier.pointerInput(Unit) {

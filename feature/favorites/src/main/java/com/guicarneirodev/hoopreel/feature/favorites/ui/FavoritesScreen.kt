@@ -37,7 +37,6 @@ fun FavoritesScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
     ) {
         when (val state = uiState) {
             is FavoriteUiState.Loading -> {

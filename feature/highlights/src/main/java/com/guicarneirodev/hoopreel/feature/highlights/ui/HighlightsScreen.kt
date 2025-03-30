@@ -50,7 +50,6 @@ fun HighlightsScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
             .pullRefresh(pullRefreshState)
     ) {
         when (val state = uiState) {
