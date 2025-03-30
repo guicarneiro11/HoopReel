@@ -7,15 +7,14 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.guicarneirodev.hoopreel.theme.BasketballOrange
-import com.guicarneirodev.hoopreel.theme.NetflixDarkGray
+import com.guicarneirodev.hoopreel.theme.LocalTeamTheme
 
 sealed class BottomNavItem(
     val route: String,
@@ -58,6 +57,7 @@ fun HoopReelBottomNavigation(
     currentRoute: String?,
     onNavigate: (String) -> Unit
 ) {
+    val teamTheme = LocalTeamTheme.current
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Favorites,
@@ -67,8 +67,8 @@ fun HoopReelBottomNavigation(
     )
 
     NavigationBar(
-        containerColor = NetflixDarkGray,
-        contentColor = Color.White
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface
     ) {
         items.forEach { item ->
             val isSelected = currentRoute == item.route
@@ -83,7 +83,7 @@ fun HoopReelBottomNavigation(
                 label = {
                     Text(
                         text = item.label,
-                        color = if (isSelected) BasketballOrange else Color.White
+                        color = if (isSelected) teamTheme.primaryColor else MaterialTheme.colorScheme.onSurface
                     )
                 },
                 selected = isSelected,
@@ -91,11 +91,11 @@ fun HoopReelBottomNavigation(
                     onNavigate(item.route)
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = BasketballOrange,
-                    selectedTextColor = BasketballOrange,
-                    indicatorColor = NetflixDarkGray,
-                    unselectedIconColor = Color.White,
-                    unselectedTextColor = Color.White
+                    selectedIconColor = teamTheme.primaryColor,
+                    selectedTextColor = teamTheme.primaryColor,
+                    indicatorColor = MaterialTheme.colorScheme.surface,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurface,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurface
                 )
             )
         }

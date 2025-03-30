@@ -26,11 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.guicarneirodev.hoopreel.core.utils.LocalTeamTheme
 import com.guicarneirodev.hoopreel.feature.highlights.presentation.StatisticsViewModel
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
@@ -44,11 +44,10 @@ fun StatisticsScreen(
     val favoritesCount by viewModel.favoritesCount.collectAsStateWithLifecycle()
     val recentFavorites by viewModel.recentFavorites.collectAsStateWithLifecycle()
     val isUpdateRunning by viewModel.isUpdateRunning.collectAsStateWithLifecycle()
+    val currentTheme = LocalTeamTheme.current
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+        modifier = Modifier.fillMaxSize()
     ) {
         LazyColumn(
             modifier = Modifier
@@ -59,7 +58,7 @@ fun StatisticsScreen(
                 Text(
                     text = "Estatísticas do HoopReel",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.padding(bottom = 24.dp)
                 )
             }
@@ -70,7 +69,7 @@ fun StatisticsScreen(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFF2F2F2F)
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
                 ) {
                     Column(
@@ -79,7 +78,7 @@ fun StatisticsScreen(
                         Text(
                             text = "Atualização de Dados",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Spacer(modifier = Modifier.height(8.dp))
@@ -95,14 +94,14 @@ fun StatisticsScreen(
                                 else
                                     "Última atualização: Diária",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color.White.copy(alpha = 0.7f)
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                             )
 
                             Button(
                                 onClick = { viewModel.runUpdateNow() },
                                 enabled = !isUpdateRunning,
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xFFFF6B00)
+                                    containerColor = currentTheme.primaryColor
                                 )
                             ) {
                                 Icon(
@@ -118,7 +117,7 @@ fun StatisticsScreen(
                             Spacer(modifier = Modifier.height(8.dp))
                             LinearProgressIndicator(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = Color(0xFFFF6B00)
+                                color = currentTheme.primaryColor
                             )
                         }
                     }
@@ -131,7 +130,7 @@ fun StatisticsScreen(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFF2F2F2F)
+                        containerColor = MaterialTheme.colorScheme.surface
                     )
                 ) {
                     Column(
@@ -140,7 +139,7 @@ fun StatisticsScreen(
                         Text(
                             text = "Favoritos",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onSurface
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -153,7 +152,7 @@ fun StatisticsScreen(
                                 text = "$favoritesCount",
                                 fontSize = 48.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFFFF6B00)
+                                color = currentTheme.primaryColor
                             )
                         }
 
@@ -162,7 +161,7 @@ fun StatisticsScreen(
                         Text(
                             text = "Total de vídeos favoritos",
                             style = MaterialTheme.typography.bodyMedium,
-                            color = Color.White.copy(alpha = 0.7f),
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                     }
@@ -174,7 +173,7 @@ fun StatisticsScreen(
                     Text(
                         text = "Favoritos Recentes",
                         style = MaterialTheme.typography.titleMedium,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
 
@@ -189,7 +188,7 @@ fun StatisticsScreen(
                             .fillMaxWidth()
                             .padding(bottom = 8.dp),
                         colors = CardDefaults.cardColors(
-                            containerColor = Color(0xFF1E1E1E)
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
                         )
                     ) {
                         Row(
@@ -204,7 +203,7 @@ fun StatisticsScreen(
                                 Text(
                                     text = favorite.title,
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     maxLines = 1
                                 )
 
@@ -213,7 +212,7 @@ fun StatisticsScreen(
                                 Text(
                                     text = "Adicionado: ${formatDate(favorite.addedTimestamp)}",
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = Color.White.copy(alpha = 0.7f)
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                                 )
                             }
                         }
