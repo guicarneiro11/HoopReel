@@ -16,7 +16,7 @@ enum class NbaTeam(
     CELTICS(
         teamId = "celtics",
         fullName = "Boston Celtics",
-        primaryColor = Color(0xFF007A33),  // Verde
+        primaryColor = Color(0xFF008348),  // Verde
         secondaryColor = Color(0xFFFFFFFF),  // Branco
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/bos.png",
         isDarkTheme = true
@@ -34,8 +34,8 @@ enum class NbaTeam(
     KNICKS(
         teamId = "knicks",
         fullName = "New York Knicks",
-        primaryColor = Color(0xFF006BB6),  // Azul
-        secondaryColor = Color(0xFFF58426),  // Laranja
+        primaryColor = Color(0xFFF58426),  // Laranja
+        secondaryColor = Color(0xFF1D428A),  // Azul
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/ny.png",
         isDarkTheme = true
     ),
@@ -43,8 +43,8 @@ enum class NbaTeam(
     SEVENTY_SIXERS(
         teamId = "76ers",
         fullName = "Philadelphia 76ers",
-        primaryColor = Color(0xFF006BB6),  // Azul
-        secondaryColor = Color(0xFFED174C),  // Vermelho
+        primaryColor = Color(0xFF016BB7),  // Azul
+        secondaryColor = Color(0xFFED174D),  // Vermelho
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/phi.png",
         isDarkTheme = true
     ),
@@ -52,7 +52,7 @@ enum class NbaTeam(
     RAPTORS(
         teamId = "raptors",
         fullName = "Toronto Raptors",
-        primaryColor = Color(0xFFCE1141),  // Vermelho
+        primaryColor = Color(0xFFBD1B21),  // Vermelho
         secondaryColor = Color(0xFF000000),  // Preto
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/tor.png",
         isDarkTheme = true
@@ -72,7 +72,7 @@ enum class NbaTeam(
         teamId = "cavaliers",
         fullName = "Cleveland Cavaliers",
         primaryColor = Color(0xFF860038),  // Vinho
-        secondaryColor = Color(0xFFFDB927),  // Dourado
+        secondaryColor = Color(0xFFBC945C),  // Dourado
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/cle.png",
         isDarkTheme = true
     ),
@@ -80,8 +80,8 @@ enum class NbaTeam(
     PISTONS(
         teamId = "pistons",
         fullName = "Detroit Pistons",
-        primaryColor = Color(0xFFC8102E),  // Vermelho
-        secondaryColor = Color(0xFF1D42BA),  // Azul
+        primaryColor = Color(0xFFE9072B),  // Vermelho
+        secondaryColor = Color(0xFF00408D),  // Azul
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/det.png",
         isDarkTheme = true
     ),
@@ -90,7 +90,7 @@ enum class NbaTeam(
         teamId = "pacers",
         fullName = "Indiana Pacers",
         primaryColor = Color(0xFF002D62),  // Azul Marinho
-        secondaryColor = Color(0xFFFDBC31),  // Dourado
+        secondaryColor = Color(0xFFFDBB30),  // Dourado
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/ind.png",
         isDarkTheme = true
     ),
@@ -108,8 +108,8 @@ enum class NbaTeam(
     HAWKS(
         teamId = "hawks",
         fullName = "Atlanta Hawks",
-        primaryColor = Color(0xFFE03A3E),  // Vermelho
-        secondaryColor = Color(0xFFBAC3C9),  // Cinza Claro
+        primaryColor = Color(0xFFC8102E),  // Vermelho
+        secondaryColor = Color(0xFFFFFFFF),  // Branco
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/atl.png",
         isDarkTheme = true
     ),
@@ -117,8 +117,8 @@ enum class NbaTeam(
     HORNETS(
         teamId = "hornets",
         fullName = "Charlotte Hornets",
-        primaryColor = Color(0xFF1D1160),  // Roxo
-        secondaryColor = Color(0xFF00788C),  // Turquesa
+        primaryColor = Color(0xFF1D1160),  // Turquesa
+        secondaryColor = Color(0xFF00788C),  // Roxo
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/cha.png",
         isDarkTheme = true
     ),
@@ -135,8 +135,8 @@ enum class NbaTeam(
     MAGIC(
         teamId = "magic",
         fullName = "Orlando Magic",
-        primaryColor = Color(0xFF0077C0),  // Azul
-        secondaryColor = Color(0xFF000000),  // Preto
+        primaryColor = Color(0xFF0B77BD),  // Azul
+        secondaryColor = Color(0xFFC2CCD2),  // Cinza
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/orl.png",
         isDarkTheme = true
     ),
@@ -156,8 +156,8 @@ enum class NbaTeam(
     NUGGETS(
         teamId = "nuggets",
         fullName = "Denver Nuggets",
-        primaryColor = Color(0xFF0E2240),  // Azul Marinho
-        secondaryColor = Color(0xFFFEC524),  // Amarelo
+        primaryColor = Color(0xFF0D2240),  // Azul Marinho
+        secondaryColor = Color(0xFFFFC627),  // Amarelo
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/den.png",
         isDarkTheme = true
     ),
@@ -174,8 +174,8 @@ enum class NbaTeam(
     THUNDER(
         teamId = "thunder",
         fullName = "Oklahoma City Thunder",
-        primaryColor = Color(0xFF007AC1),  // Azul
-        secondaryColor = Color(0xFFEF3B24),  // Laranja
+        primaryColor = Color(0xFF0A7EC2),  // Azul
+        secondaryColor = Color(0xFFF05333),  // Laranja
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/okc.png",
         isDarkTheme = true
     ),
@@ -183,8 +183,8 @@ enum class NbaTeam(
     TRAIL_BLAZERS(
         teamId = "blazers",
         fullName = "Portland Trail Blazers",
-        primaryColor = Color(0xFFE03A3E),  // Vermelho
-        secondaryColor = Color(0xFF000000),  // Preto
+        primaryColor = Color(0xFFFF373C),  // Vermelho
+        secondaryColor = Color(0xFFFFFFFF),  // Preto
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/por.png",
         isDarkTheme = true
     ),
@@ -192,8 +192,8 @@ enum class NbaTeam(
     JAZZ(
         teamId = "jazz",
         fullName = "Utah Jazz",
-        primaryColor = Color(0xFF002B5C),  // Azul Marinho
-        secondaryColor = Color(0xFF00471B),  // Verde Escuro
+        primaryColor = Color(0xFF542C68),  // Roxo
+        secondaryColor = Color(0xFF001E3F),  // Azul
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
         isDarkTheme = true
     ),
@@ -203,7 +203,7 @@ enum class NbaTeam(
         teamId = "warriors",
         fullName = "Golden State Warriors",
         primaryColor = Color(0xFF1D428A),  // Azul
-        secondaryColor = Color(0xFFFFD700),  // Dourado
+        secondaryColor = Color(0xFFFDB927),  // Dourado
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/gs.png",
         isDarkTheme = true
     ),
@@ -211,8 +211,8 @@ enum class NbaTeam(
     CLIPPERS(
         teamId = "clippers",
         fullName = "Los Angeles Clippers",
-        primaryColor = Color(0xFF1D428A),  // Azul
-        secondaryColor = Color(0xFFC8102E),  // Vermelho
+        primaryColor = Color(0xFF0A2240),  // Azul
+        secondaryColor = Color(0xFFCE0E2D),  // Vermelho
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/lac.png",
         isDarkTheme = true
     ),
@@ -220,7 +220,7 @@ enum class NbaTeam(
     LAKERS(
         teamId = "lakers",
         fullName = "Los Angeles Lakers",
-        primaryColor = Color(0xFF552583),  // Roxo
+        primaryColor = Color(0xFF31006F),  // Roxo
         secondaryColor = Color(0xFFFDB927),  // Amarelo/Dourado
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/lal.png",
         isDarkTheme = true
@@ -229,8 +229,8 @@ enum class NbaTeam(
     SUNS(
         teamId = "suns",
         fullName = "Phoenix Suns",
-        primaryColor = Color(0xFF1D1160),  // Roxo
-        secondaryColor = Color(0xFFE56020),  // Laranja
+        primaryColor = Color(0xFFD55F1F),  // Laranja
+        secondaryColor = Color(0xFF391366),  // Roxo
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/phx.png",
         isDarkTheme = true
     ),
@@ -238,8 +238,8 @@ enum class NbaTeam(
     KINGS(
         teamId = "kings",
         fullName = "Sacramento Kings",
-        primaryColor = Color(0xFF5A2D81),  // Roxo
-        secondaryColor = Color(0xFF63727A),  // Cinza
+        primaryColor = Color(0xFF662984),  // Roxo
+        secondaryColor = Color(0xFF707372),  // Cinza
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/sac.png",
         isDarkTheme = true
     ),
@@ -248,8 +248,8 @@ enum class NbaTeam(
     MAVERICKS(
         teamId = "mavericks",
         fullName = "Dallas Mavericks",
-        primaryColor = Color(0xFF0053BC),  // Azul
-        secondaryColor = Color(0xFF00285E),  // Azul Escuro
+        primaryColor = Color(0xFF007DC5),  // Azul
+        secondaryColor = Color(0xFFFFFFFF),  // Branco
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/dal.png",
         isDarkTheme = true
     ),
@@ -257,8 +257,8 @@ enum class NbaTeam(
     ROCKETS(
         teamId = "rockets",
         fullName = "Houston Rockets",
-        primaryColor = Color(0xFFCE1141),  // Vermelho
-        secondaryColor = Color(0xFF000000),  // Preto
+        primaryColor = Color(0xFF000000),  // Preto
+        secondaryColor = Color(0xFFF00840),  // Vermelho
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/hou.png",
         isDarkTheme = true
     ),
@@ -266,8 +266,8 @@ enum class NbaTeam(
     GRIZZLIES(
         teamId = "grizzlies",
         fullName = "Memphis Grizzlies",
-        primaryColor = Color(0xFF5D76A9),  // Azul Claro
-        secondaryColor = Color(0xFF12173F),  // Azul Escuro
+        primaryColor = Color(0xFF12173F),  // Azul Escuro
+        secondaryColor = Color(0xFF5D76A9),  // Azul Claro
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/mem.png",
         isDarkTheme = true
     ),
@@ -275,8 +275,8 @@ enum class NbaTeam(
     PELICANS(
         teamId = "pelicans",
         fullName = "New Orleans Pelicans",
-        primaryColor = Color(0xFF0C2340),  // Azul Marinho
-        secondaryColor = Color(0xFFC8102E),  // Vermelho
+        primaryColor = Color(0xFF001644),  // Azul Marinho
+        secondaryColor = Color(0xFFC69E66),  // Creme
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/no.png",
         isDarkTheme = true
     ),
@@ -284,8 +284,8 @@ enum class NbaTeam(
     SPURS(
         teamId = "spurs",
         fullName = "San Antonio Spurs",
-        primaryColor = Color(0xFF000000),  // Preto
-        secondaryColor = Color(0xFFFFFFFF),  // Branco
+        primaryColor = Color(0xFFC1CFD5),  // Cinza
+        secondaryColor = Color(0xFF000000),  // Preto
         logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/sa.png",
         isDarkTheme = true
     ),
@@ -294,8 +294,8 @@ enum class NbaTeam(
     DEFAULT(
         teamId = "default",
         fullName = "HoopReel",
-        primaryColor = Color(0xFFFF6B00),  // BasketballOrange
-        secondaryColor = Color(0xFFFF8534),  // BasketballLightOrange
+        primaryColor = Color(0xFF0056A1),  // Azul NBA
+        secondaryColor = Color(0xFFCC2C30),  // Vermelho NBA
         logoUrl = "",
         isDarkTheme = true
     );

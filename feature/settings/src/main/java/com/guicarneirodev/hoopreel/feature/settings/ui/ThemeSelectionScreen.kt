@@ -96,7 +96,6 @@ fun TeamThemeItem(
             )
             .clickable(onClick = onClick)
     ) {
-        // Logo centralizado
         if (team.logoUrl.isNotEmpty()) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
@@ -107,7 +106,7 @@ fun TeamThemeItem(
                 contentDescription = team.fullName,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxSize(0.7f)  // 70% do tamanho do box
+                    .fillMaxSize(0.7f)
                     .align(Alignment.Center)
                     .padding(16.dp)
             )
