@@ -194,7 +194,7 @@ enum class NbaTeam(
         fullName = "Utah Jazz",
         primaryColor = Color(0xFF542C68),  // Roxo
         secondaryColor = Color(0xFF001E3F),  // Azul
-        logoUrl = "https://a.espncdn.com/i/teamlogos/nba/500/utah.png",
+        logoUrl = "https://a.espncdn.com/guid/77cea2fb-1388-b7c8-d171-2e72b3aecbfb/logos/primary_logo_on_black_color.png",
         isDarkTheme = true
     ),
 
