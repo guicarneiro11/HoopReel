@@ -20,6 +20,8 @@ import com.guicarneirodev.hoopreel.navigation.AppNavigation
 import com.guicarneirodev.hoopreel.navigation.HoopReelBottomNavigation
 import com.guicarneirodev.hoopreel.navigation.NavDestination
 import com.guicarneirodev.hoopreel.feature.settings.presentation.ThemeViewModel
+import com.guicarneirodev.hoopreel.feature.splash.presentation.SplashViewModel
+import com.guicarneirodev.hoopreel.feature.splash.ui.SplashScreen
 import com.guicarneirodev.hoopreel.theme.HoopReelTheme
 import com.guicarneirodev.hoopreel.theme.TeamBackgroundDecoration
 import org.koin.androidx.compose.koinViewModel
@@ -30,10 +32,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             val themeViewModel: ThemeViewModel = koinViewModel()
             val currentTheme by themeViewModel.currentTheme.collectAsStateWithLifecycle()
+            var showSplash by remember { mutableStateOf(true) }
 
             HoopReelTheme(currentTheme = currentTheme) {
-                TeamBackgroundDecoration {
-                    MainContent()
+                if (showSplash) {
+                    val splashViewModel: SplashViewModel = koinViewModel()
+                    SplashScreen(
+                        onLoadingComplete = { showSplash = false },
+                        viewModel = splashViewModel
+                    )
+                } else {
+                    TeamBackgroundDecoration {
+                        MainContent()
+                    }
                 }
             }
         }

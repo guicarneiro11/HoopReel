@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature:search"))
     implementation(project(":feature:favorites"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:splash"))
 
     // Compose
     implementation(libs.androidx.activity.compose)
