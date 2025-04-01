@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.guicarneirodev.hoopreel.feature.splash.presentation.SplashViewModel
 import kotlinx.coroutines.delay
 
@@ -38,12 +39,15 @@ fun SplashScreen(
     onLoadingComplete: () -> Unit,
     viewModel: SplashViewModel
 ) {
-    val progress by viewModel.progress
-    val isLoadingComplete by viewModel.isLoadingComplete
+    // Coletamos os valores de StateFlow usando collectAsStateWithLifecycle
+    val progress by viewModel.progress.collectAsStateWithLifecycle()
+    val isLoadingComplete by viewModel.isLoadingComplete.collectAsStateWithLifecycle()
+
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
-        animationSpec = tween(durationMillis = 1000), label = ""
+        animationSpec = tween(durationMillis = 1000),
+        label = "AlphaAnimation"
     )
 
     LaunchedEffect(key1 = true) {
@@ -99,9 +103,11 @@ fun SplashScreen(
 
             Spacer(modifier = Modifier.height(48.dp))
 
-            // Progress Bar
+            // Progress Bar - agora passamos o Float diretamente
             LinearProgressIndicator(
-                progress = { progress },
+                progress = {
+                    progress  // Não é mais uma lambda
+                },
                 modifier = Modifier.fillMaxWidth(),
                 color = Color(0xFFFF6B00),
                 trackColor = Color(0xFF1E1E1E),

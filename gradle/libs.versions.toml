@@ -1,10 +1,8 @@
 [versions]
 agp = "8.7.3"
+kotestRunnerJunit4 = "5.8.1"
 kotlin = "2.1.0"
 coreKtx = "1.15.0"
-junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 material-compose = "1.7.8"
@@ -26,16 +24,24 @@ ksp = "2.1.0-1.0.29"
 work = "2.10.0"
 compose-livedata = "1.7.8"
 datastore = "1.1.4"
+junit = "4.13.2"
+junit-ext = "1.2.1"
+espresso = "3.6.1"
+mockk = "1.13.10"
+kotest = "5.8.1"
+turbine = "1.1.0"
+compose-ui-test = "1.7.8"
+coroutines-test = "1.10.1"
+koin-test = "4.0.0"
+robolectric = "4.11.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+kotest-runner-junit4 = { module = "io.kotest:kotest-runner-junit4", version.ref = "kotestRunnerJunit4" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -87,6 +93,22 @@ work-runtime = { group = "androidx.work", name = "work-runtime-ktx", version.ref
 # DataStore
 datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 datastore-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
+
+# Testes
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockk-android = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+kotest-runner = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
+compose-ui-test = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "compose-ui-test" }
+compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin-test" }
+koin-test-junit4 = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin-test" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

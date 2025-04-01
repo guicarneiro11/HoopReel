@@ -1,13 +1,13 @@
 package com.guicarneirodev.hoopreel.feature.splash.presentation
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -15,11 +15,11 @@ class SplashViewModel(
     private val highlightsRepository: HighlightsRepository
 ) : ViewModel() {
 
-    private val _progress = mutableFloatStateOf(0f)
-    val progress: State<Float> = _progress
+    private val _progress = MutableStateFlow(0f)
+    val progress: StateFlow<Float> = _progress.asStateFlow()
 
-    private val _isLoadingComplete = mutableStateOf(false)
-    val isLoadingComplete: State<Boolean> = _isLoadingComplete
+    private val _isLoadingComplete = MutableStateFlow(false)
+    val isLoadingComplete: StateFlow<Boolean> = _isLoadingComplete.asStateFlow()
 
     fun startLoading() {
         viewModelScope.launch {
@@ -33,8 +33,8 @@ class SplashViewModel(
 
             dataLoadJob.join()
 
-            while (_progress.floatValue < 1f) {
-                _progress.floatValue = minOf(_progress.floatValue + 0.05f, 1f)
+            while (_progress.value < 1f) {
+                _progress.value = minOf(_progress.value + 0.05f, 1f)
                 delay(50)
             }
 
@@ -45,12 +45,14 @@ class SplashViewModel(
     }
 
     private suspend fun simulateProgressIncrease() {
+        // Incrementa o progresso gradualmente até 85% para dar margem ao carregamento real
         val targetProgress = 0.85f
-        while (_progress.floatValue < targetProgress) {
+        while (_progress.value < targetProgress) {
+            // Incremento com aleatoriedade para parecer mais natural
             val increment = 0.01f + (kotlin.random.Random.nextFloat() * 0.02f)
 
-            val newProgress = _progress.floatValue + increment
-            _progress.floatValue = if (newProgress < targetProgress) newProgress else targetProgress
+            val newProgress = _progress.value + increment
+            _progress.value = if (newProgress < targetProgress) newProgress else targetProgress
 
             delay(100)
         }
@@ -58,11 +60,14 @@ class SplashViewModel(
 
     private suspend fun preloadData() = withContext(Dispatchers.IO) {
         try {
-            highlightsRepository.getPlayers()
+            // Carregar dados essenciais para a tela inicial
+            val players = highlightsRepository.getPlayers()
 
+            // Simulando algum processamento adicional
             delay(500)
 
         } catch (e: Exception) {
+            // Em caso de falha, ainda permite prosseguir
             e.printStackTrace()
         }
     }

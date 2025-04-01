@@ -38,6 +38,12 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -67,4 +73,27 @@ dependencies {
 
     // Ícones
     implementation(libs.material.icons.extended)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotest.runner)
+    testImplementation(libs.kotest.assertions)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.kotest.runner.junit4)
+
+    // Android Testing
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.mockk.android)
+    androidTestImplementation(libs.compose.ui.test)
+    debugImplementation(libs.compose.ui.test.manifest)
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
