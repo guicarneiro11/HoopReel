@@ -3,6 +3,7 @@ package com.guicarneirodev.hoopreel.feature.splash.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guicarneirodev.hoopreel.feature.highlights.domain.repository.HighlightsRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class SplashViewModel(
-    private val highlightsRepository: HighlightsRepository
+    private val highlightsRepository: HighlightsRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _progress = MutableStateFlow(0f)
@@ -58,10 +60,10 @@ class SplashViewModel(
         }
     }
 
-    private suspend fun preloadData() = withContext(Dispatchers.IO) {
+    private suspend fun preloadData() = withContext(ioDispatcher) {  // Usando o dispatcher injetado
         try {
             // Carregar dados essenciais para a tela inicial
-            val players = highlightsRepository.getPlayers()
+            highlightsRepository.getPlayers()
 
             // Simulando algum processamento adicional
             delay(500)
