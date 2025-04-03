@@ -23,7 +23,7 @@ import io.kotest.runner.junit4.KotestTestRunner
 
 @RunWith(KotestTestRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
-class SplashViewModelTest : FunSpec() {
+class KotestSplashViewModelTest : FunSpec() {
 
     init {
         // Configurar coroutines de teste
