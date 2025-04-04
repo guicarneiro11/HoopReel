@@ -93,38 +93,3 @@ dependencies {
     androidTestImplementation(libs.compose.ui.test)
     debugImplementation(libs.compose.ui.test.manifest)
 }
-
-// Define a tarefa específica para testes JUnit
-tasks.register<Test>("testJUnit") {
-    // Usar JUnit 4
-    useJUnit()
-
-    // Incluir apenas os testes JUnit
-    include("**/*JUnitSplashViewModelTest.class")
-
-    // Configurações adicionais
-    systemProperty("kotest.framework.classpath.scanning.config.disable", "true")
-    jvmArgs("-XX:+EnableDynamicAgentLoading")
-}
-
-// Define uma tarefa específica para testes Kotest
-tasks.register<Test>("testKotest") {
-    // Usar JUnit Platform (necessário para Kotest)
-    useJUnitPlatform()
-
-    // Incluir apenas os testes Kotest
-    include("**/*KotestSplashViewModelTest.class")
-
-    // Configurações adicionais
-    systemProperty("kotest.framework.classpath.scanning.config.disable", "true")
-    jvmArgs("-XX:+EnableDynamicAgentLoading")
-}
-
-// Configura a tarefa padrão de teste para usar JUnit Platform (para os testes Kotest)
-tasks.withType<Test>().configureEach {
-    if (name.contains("test") && !name.contains("JUnit") && !name.contains("Kotest")) {
-        useJUnitPlatform()
-        systemProperty("kotest.framework.classpath.scanning.config.disable", "true")
-        jvmArgs("-XX:+EnableDynamicAgentLoading")
-    }
-}
