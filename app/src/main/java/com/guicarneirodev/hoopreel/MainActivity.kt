@@ -3,11 +3,14 @@ package com.guicarneirodev.hoopreel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.guicarneirodev.hoopreel.navigation.AppNavigation
 import com.guicarneirodev.hoopreel.navigation.HoopReelBottomNavigation
 import com.guicarneirodev.hoopreel.navigation.NavDestination
@@ -35,6 +39,17 @@ class MainActivity : ComponentActivity() {
             var showSplash by remember { mutableStateOf(true) }
 
             HoopReelTheme(currentTheme = currentTheme) {
+                val systemUiController = rememberSystemUiController()
+                val useDarkIcons = isSystemInDarkTheme()
+                val statusBarColor = MaterialTheme.colorScheme.background
+
+                SideEffect {
+                    systemUiController.setStatusBarColor(
+                        color = statusBarColor,
+                        darkIcons = !useDarkIcons
+                    )
+                }
+
                 if (showSplash) {
                     val splashViewModel: SplashViewModel = koinViewModel()
                     SplashScreen(

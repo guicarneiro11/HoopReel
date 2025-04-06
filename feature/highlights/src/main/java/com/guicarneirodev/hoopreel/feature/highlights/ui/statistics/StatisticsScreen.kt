@@ -1,6 +1,5 @@
 package com.guicarneirodev.hoopreel.feature.highlights.ui.statistics
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -57,9 +56,10 @@ fun StatisticsScreen(
             item {
                 Text(
                     text = "Estatísticas do HoopReel",
-                    style = MaterialTheme.typography.headlineMedium,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.padding(bottom = 20.dp)
                 )
             }
 
@@ -97,19 +97,26 @@ fun StatisticsScreen(
                                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                             )
 
+                            Spacer(modifier = Modifier.size(8.dp))
+
                             Button(
+                                modifier = Modifier.padding(0.dp),
                                 onClick = { viewModel.runUpdateNow() },
                                 enabled = !isUpdateRunning,
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = currentTheme.primaryColor
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onBackground
                                 )
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Refresh,
-                                    contentDescription = "Atualizar agora"
+                                    contentDescription = "Atualizar",
+                                    modifier = Modifier.size(24.dp)
                                 )
-                                Spacer(modifier = Modifier.width(4.dp))
-                                Text("Atualizar agora")
+
+                                Spacer(modifier = Modifier.size(4.dp))
+
+                                Text(text = "Atualizar", fontSize = 12.sp)
                             }
                         }
 
@@ -152,7 +159,7 @@ fun StatisticsScreen(
                                 text = "$favoritesCount",
                                 fontSize = 48.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = currentTheme.primaryColor
+                                color = MaterialTheme.colorScheme.primary
                             )
                         }
 

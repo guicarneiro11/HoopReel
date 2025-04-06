@@ -14,6 +14,8 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import com.guicarneirodev.hoopreel.theme.LocalTeamTheme
 
 sealed class BottomNavItem(
@@ -83,7 +85,11 @@ fun HoopReelBottomNavigation(
                 label = {
                     Text(
                         text = item.label,
-                        color = if (isSelected) teamTheme.primaryColor else MaterialTheme.colorScheme.onSurface
+                        color = if (isSelected) teamTheme.primaryColor else MaterialTheme.colorScheme.onSurface,
+                        fontSize = 10.sp,
+                        maxLines = 1,
+                        minLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 },
                 selected = isSelected,

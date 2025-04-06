@@ -1,12 +1,11 @@
 package com.guicarneirodev.hoopreel.feature.search.ui
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -14,11 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.guicarneirodev.hoopreel.feature.search.presentation.SearchUiState
 import com.guicarneirodev.hoopreel.feature.search.presentation.SearchViewModel
-import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchBar
-import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchLoading
-import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchError
 import com.guicarneirodev.hoopreel.feature.search.ui.components.EmptySearchResults
 import com.guicarneirodev.hoopreel.feature.search.ui.components.InitialSearchState
+import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchBar
+import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchError
+import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchLoading
 import com.guicarneirodev.hoopreel.feature.search.ui.components.SearchResults
 import org.koin.androidx.compose.koinViewModel
 
@@ -36,7 +35,7 @@ fun SearchScreen(
             .fillMaxSize()
     ) {
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxWidth()
         ) {
             SearchBar(
                 query = searchQuery,
@@ -45,7 +44,6 @@ fun SearchScreen(
                 onClearQuery = { viewModel.clearSearchQuery() },
                 modifier = Modifier.padding(16.dp)
             )
-
             when (val state = uiState) {
                 is SearchUiState.Initial -> {
                     InitialSearchState(
