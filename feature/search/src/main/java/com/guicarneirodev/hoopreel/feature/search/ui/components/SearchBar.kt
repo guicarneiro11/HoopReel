@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -67,9 +68,9 @@ fun SearchBar(
             unfocusedTextColor = Color.White,
             focusedContainerColor = Color(0xFF2F2F2F),
             unfocusedContainerColor = Color(0xFF2F2F2F),
-            focusedIndicatorColor = Color(0xFFFF6B00),
-            unfocusedIndicatorColor = Color.Transparent,
-            cursorColor = Color(0xFFFF6B00)
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary
         ),
         modifier = modifier.fillMaxWidth()
     )

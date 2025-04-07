@@ -1,4 +1,5 @@
 [versions]
+accompanistSystemuicontroller = "0.30.1"
 agp = "8.9.1"
 kotestRunnerJunit4 = "5.8.1"
 kotlin = "2.1.0"
@@ -51,6 +52,8 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 material-compose = { group = "androidx.compose.material", name = "material", version.ref = "material-compose" }
 compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "compose-livedata" }
+
+accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistSystemuicontroller" }
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
